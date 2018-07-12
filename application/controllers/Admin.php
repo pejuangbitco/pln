@@ -1,0 +1,274 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Admin extends MY_Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        $array = array(
+            'username' => 'adminn',
+            'role' => 1
+        );
+        
+        $this->session->set_userdata( $array );
+        $this->data['username']      = $this->session->userdata('username');
+        $this->data['role']  = $this->session->userdata('role');
+        if (!isset($this->data['username'], $this->data['role']))
+        {
+            $this->session->sess_destroy();
+            redirect('login');
+            exit;
+        }
+        if ($this->data['role'] != 1)
+        {
+            $this->session->sess_destroy();
+            redirect('login');
+            exit;
+        }
+
+    }
+    
+    /*
+        tampilkan charts realisasi berdasarkan data yg udah diupdate statusnya menjadi selesai
+
+    */
+    public function index()
+    {
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+    /*
+        input data pelanggan
+        data modem pelanggan
+        data meteran
+        data simcard
+    */
+    public function pelanggan()
+    {
+        $this->load->model('data_pelanggan_m');
+        $this->load->model('modem_m');
+        $this->load->model('sim_card_m');
+
+        if($this->POST('submit')) {
+            $this->data['sim'] = [
+                'nomor'       => $this->POST('nomor'),
+                'provider'    => $this->POST('provider'),
+                'id_pelanggan'=> $this->POST('id_pelanggan')                
+            ];
+            $this->data['meter'] = [
+                'merk'  => $this->POST('merk'),
+                'tipe'  => $this->POST('tipe'),
+                'kelas' => $this->POST('kelas'),
+                'tahun' => $this->POST('tahun'),
+                'arus'  => $this->POST('arus'),
+                'idpel' => $this->POST('id_pelanggan')             
+            ];
+            $this->data['modem'] = [
+                'imei'          => $this->POST('imei'),
+                'merk'          => $this->POST('merk'),
+                'tipe'          => $this->POST('tipe'),
+                'id_pelanggan'  => $this->POST('id_pelanggan')
+            ];        
+            $this->data['pelanggan'] = [
+                'unitupi'   => $this->POST('unitupi'),
+                'unitap'    => $this->POST('unitap'),
+                'unitup'    => $this->POST('unitup'),
+                'idpel'     => $this->POST('id_pelanggan'),
+                'nama'      => $this->POST('nama'),
+                'alamat'    => $this->POST('alamat'),
+                'tarif'     => $this->POST('tarif') ,
+                'daya'      => $this->POST('daya'),
+                'status'    => $this->POST('status')
+            ];
+            $this->sim_card_m->insert($this->data['sim']);
+            $this->meter_m->insert($this->data['meter']);
+            $this->modem_m->insert($this->data['modem']);
+            $this->data_pelanggan_m->insert($this->data['pelanggan']);
+            $this->flashmsg('Sukses Input Data.');
+            redirect('admin/pegawai','refresh');
+            exit();
+        }
+
+        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+/*
+        input data pegawai
+        
+    */
+    public function pegawai()
+    {
+        $this->load->model('pegawai_m');
+        $this->load->model('user_m');
+
+        $action = $this->uri->segment(3);
+        if(isset($action) && $action=='delete') {
+            $id = $this->uri->segment(4);
+            $this->pegawai_m->delete($id);
+            $this->user_m->delete($id);
+            $this->flashmsg('Sukses Delete Data.');
+            redirect('admin/pegawai','refresh');
+            exit();
+        }
+
+        if($this->POST('submit')) {
+            $this->data['user'] = [
+                'username'  => $this->POST('username'),
+                'password'  => $this->POST('password'),
+                'role'      => 2
+            ];            
+            $this->data['pegawai'] = [
+                'username'  => $this->POST('username'),
+                'nama'      => $this->POST('nama'),
+                'nama_team' => $this->POST('nama_team')               
+            ];
+            $this->user_m->insert($this->data['user']);
+            $this->pegawai_m->insert($this->data['pegawai']);
+            $this->flashmsg('Sukses Input Data.');
+            redirect('admin/pegawai','refresh');
+            exit();
+        }
+
+        $this->data['pegawai']      = $this->pegawai_m->get();
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+    public function edit_pegawai()
+    {
+        $this->load->model('pegawai_m');
+        $this->load->model('user_m');
+
+        $id = $this->uri->segment(3);
+        if(!isset($id)) {
+            redirect('pegawai','refresh');
+            exit();
+        }
+
+        if($this->POST('edit')) {
+            $this->data['user'] = [
+                'username'  => $this->POST('username'),
+                'password'  => $this->POST('password')                
+            ];
+            $this->user_m->update($id,$this->data['user']);
+            $this->data['pegawai'] = [
+                'username'  => $this->POST('username'),
+                'nama'      => $this->POST('nama'),
+                'nama_team' => $this->POST('nama_team')               
+            ];
+            $this->pegawai_m->update($id,$this->data['pegawai']);
+            $this->flashmsg('Sukses Update Data.');
+            redirect('admin/pegawai','refresh');
+            exit();
+        }
+
+        $this->data['pegawai']      = $this->pegawai_m->get_row([ 'username' => $id ]);
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+    /*
+        input TO ke pegawai mana yg ingin di target melakukan        
+    */
+    public function target_operasional()
+    {
+        $this->load->model('target_operasional_m');
+        $this->load->model('data_pelanggan_m');
+        $this->load->model('pegawai_m');
+
+        if($this->POST('submit')) {
+            $this->data['target'] = [
+                'id_pelanggan'  => $this->POST('id_pelanggan'),
+                'alasan'        => $this->POST('alasan'),
+                'date'          => $this->POST('date'),
+                'status'        => $this->POST('status'),
+                'pegawai'       => $this->POST('pegawai')
+            ];
+            $this->target_operasional_m->insert($this->data['target']);
+            $this->flashmsg('Sukses Input Data.');
+            redirect('admin/target_operasional','refresh');
+            exit();
+        }
+
+        $this->data['pelanggan']    = $this->data_pelanggan_m->get();
+        $this->data['pegawai']      = $this->pegawai_m->get();
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+    // update realiasi yg diinput oleh pegawai nantinya
+    // print pdf realisasi per pelanggan
+    public function realisasi()
+    {
+        $this->load->model('realisasi_m');
+
+        $action = $this->uri->segment(3);
+        if(isset($action) && $action=='delete') {
+            $id = $this->uri->segment(4);
+            $this->realisasi_m->delete($id);
+            $this->flashmsg('Sukses Delete Data.');
+            redirect('admin/realisasi','refresh');
+            exit();
+        }
+
+        $this->data['realisasi']    = $this->realisasi_m->getDataJoin(['target_operasional'],['target_operasional.id_to=realisasi.id_to']);
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/dashboard';
+        $this->template($this->data);
+    }
+
+    public function edit_realisasi()
+    {
+        $this->load->model([ 'realisasi_m','target_operasional_m' ]);
+
+        $id = $this->uri->segment(3);
+        if(!isset($id)) {
+            redirect('realisasi','refresh');
+            exit();
+        }
+
+        if($this->POST('edit')) {
+            $this->data['realisasi'] = [
+                'id_pelanggan'   => $this->POST('id_pelanggan'),
+                'id_to'          => $this->POST('id_to'),
+                'ganti_meter'    => $this->POST('ganti_meter'),   
+                'ganti_sim'      => $this->POST('ganti_sim'),   
+                'ganti_modem'    => $this->POST('ganti_modem'),
+                'ganti_pembatas' => $this->POST('ganti_pembatas'),            
+                'ganti_ct'       => $this->POST('ganti_ct'),
+                'kesimpulan'     => $this->POST('kesimpulan'),
+                'tanggal'        => $this->POST('tanggal'),
+                'arus_r'         => $this->POST('arus_r'),
+                'arus_s'         => $this->POST('arus_s'),
+                'arus_t'         => $this->POST('arus_t'),
+                'tegangan_r'     => $this->POST('tegangan_r'),
+                'tegangan_s'     => $this->POST('tegangan_s'),
+                'tegangan_t'     => $this->POST('tegangan_t'),
+                'stand_total'    => $this->POST('stand_total'),
+                'status'         => $this->POST('status')
+            ];
+            $this->realisasi_m->update($id,$this->data['realisasi']);
+            $this->flashmsg('Sukses Update Data.');
+            redirect('admin/realisasi','refresh');
+            exit();
+        }   
+
+        $this->data['realisasi']            = $this->realisasi_m->get_row([ 'id_realisasi' => $id ]);
+        $this->data['target_operasional']   = $this->target_operasional_m->get();        
+        $this->data['title']                = 'Dashboard Admin';
+        $this->data['content']              = 'admin/dashboard';
+    }
+
+
+
+}
