@@ -95,7 +95,7 @@ class Admin extends MY_Controller
 
         
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/dashboard';
+        $this->data['content']      = 'admin/pelanggan';
         $this->template($this->data);
     }
 
@@ -202,7 +202,7 @@ class Admin extends MY_Controller
         $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['pegawai']      = $this->pegawai_m->get();
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/dashboard';
+        $this->data['content']      = 'admin/target_operasional';
         $this->template($this->data);
     }
 
