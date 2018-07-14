@@ -138,7 +138,7 @@ class Admin extends MY_Controller
 
         $this->data['pegawai']      = $this->pegawai_m->get();
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/dashboard';
+        $this->data['content']      = 'admin/pegawai';
         $this->template($this->data);
     }
 
@@ -154,16 +154,23 @@ class Admin extends MY_Controller
         }
 
         if($this->POST('edit')) {
-            $this->data['user'] = [
+            if($this->POST('password')) {
+                $this->data['user'] = [
                 'username'  => $this->POST('username'),
                 'password'  => $this->POST('password')                
-            ];
-            $this->user_m->update($id,$this->data['user']);
+                ];    
+            } else {
+                $this->data['user'] = [
+                'username'  => $this->POST('username')                
+                ];
+            }
+                        
             $this->data['pegawai'] = [
                 'username'  => $this->POST('username'),
                 'nama'      => $this->POST('nama'),
                 'nama_team' => $this->POST('nama_team')               
             ];
+            $this->user_m->update($id,$this->data['user']);
             $this->pegawai_m->update($id,$this->data['pegawai']);
             $this->flashmsg('Sukses Update Data.');
             redirect('admin/pegawai','refresh');
@@ -172,7 +179,7 @@ class Admin extends MY_Controller
 
         $this->data['pegawai']      = $this->pegawai_m->get_row([ 'username' => $id ]);
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/dashboard';
+        $this->data['content']      = 'admin/edit_pegawai';
         $this->template($this->data);
     }
 
@@ -221,9 +228,9 @@ class Admin extends MY_Controller
             exit();
         }
 
-        $this->data['realisasi']    = $this->realisasi_m->getDataJoin(['target_operasional'],['target_operasional.id_to=realisasi.id_to']);
+        $this->data['realisasi']    = $this->realisasi_m->get([ 'status' => 0 ]);        
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/dashboard';
+        $this->data['content']      = 'admin/realisasi';
         $this->template($this->data);
     }
 
@@ -266,7 +273,8 @@ class Admin extends MY_Controller
         $this->data['realisasi']            = $this->realisasi_m->get_row([ 'id_realisasi' => $id ]);
         $this->data['target_operasional']   = $this->target_operasional_m->get();        
         $this->data['title']                = 'Dashboard Admin';
-        $this->data['content']              = 'admin/dashboard';
+        $this->data['content']              = 'admin/edit_realisasi';
+        $this->template($this->data);
     }
 
 
