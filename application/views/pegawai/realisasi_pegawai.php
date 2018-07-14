@@ -35,7 +35,7 @@
                                                                                                 
                                                 <td align="center">
                                                 
-                                                <a href="<?= base_url( 'pegawai/edit_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary">Input</i></a>                                                
+                                                <a href="<?= base_url( 'pegawai/input_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary">Input</i></a>                                                
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>

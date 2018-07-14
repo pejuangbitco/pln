@@ -45,28 +45,81 @@ class Pegawai extends MY_Controller
         $this->load->model('target_operasional_m');
         $this->data['realisasi']    = $this->target_operasional_m->get([ 'pegawai' => $this->data['username'] ]);        
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/realisasi_pegawai';
+        $this->data['content']      = 'pegawai/realisasi_pegawai';
         $this->template($this->data);
     }
 
-    public function edit_realisasi($value='')
+    public function input_realisasi($value='')
     {
-        $this->load->model('realisasi_m');
-        $this->load->model('pegawai_m');
-        $this->load->model('target_operasional_m');
+        $this->load->model([ 'realisasi_m','modem_m','pembatas_arus_m','ct_m','sim_card_m','meter_m' ]);        
 
         $id_to = $this->uri->segment(3);
         if(!isset($id_to)) {
             redirect('pegawai/realisasi','refresh');
             exit();
         }
-        if($this->POST('submit')) {            
+        if($this->POST('submit')) {
+            if($this->POST('ganti_modem') == 1) {
+                $this->data['modem'] = [
+                    'imeimodem'     => $this->POST('imeimodem'),
+                    'merkmodem'     => $this->POST('merkmodem'),
+                    'tipemodem'     => $this->POST('tipemodem'),
+                    'id_pelanggan'  => $this->POST('id_pelanggan')
+                ];
+                $this->modem_m->insert($this->data['modem']);
+            }            
+            if($this->POST('ganti_meter') == 1) {
+                $this->data['meter'] = [
+                    'idmeter'       => $this->POST('idmeter'),
+                    'merkmeter'     => $this->POST('merkmeter'),
+                    'tipemeter'     => $this->POST('tipemeter'),
+                    'kelasmeter'    => $this->POST('kelasmeter'),
+                    'tahunbuat'     => $this->POST('tahunbuat'),
+                    'arusmeter'     => $this->POST('arusmeter'),
+                    'idpel'         => $this->POST('id_pelanggan')
+                ];
+                $this->meter_m->insert($this->data['meter']);
+            }
+            if($this->POST('ganti_pembatas') == 1) {
+                $this->data['pembatas'] = [
+                    'merkpembatas'  => $this->POST('merkpembatas'),
+                    'tipepembatas'  => $this->POST('tipepembatas'),
+                    'aruspembatas'  => $this->POST('aruspembatas'),
+                    'id_pelanggan'  => $this->POST('id_pelanggan')
+                ];
+                $this->pembatas_arus_m->insert($this->data['pembatas']);
+            }
+            if($this->POST('ganti_sim') == 1) {
+                $this->data['sim'] = [
+                    'nomortlp'      => $this->POST('nomortlp'),
+                    'provider'      => $this->POST('provider'),
+                    'id_pelanggan'  => $this->POST('id_pelanggan')
+                ];
+                $this->sim_card_m->insert($this->data['sim']);
+            }
+            if($this->POST('ganti_ct') == 1) {
+                $this->data['ct'] = [
+                    'jenisct'       => $this->POST('jenisct'),
+                    'id_pelanggan'  => $this->POST('id_pelanggan')
+                ];
+                $this->ct_m->insert($this->data['ct']);
+            }
             $this->data['realisasi'] = [
+                'id_to'           => $this->POST('id_to'),
+                'arus_r'          => $this->POST('arus_r'),
+                'arus_s'          => $this->POST('arus_s'),
+                'arus_t'          => $this->POST('arus_t'),
+                'tegangan_r'      => $this->POST('tegangan_r'),
+                'tegangan_s'      => $this->POST('tegangan_s'),
+                'tegangan_t'      => $this->POST('tegangan_t'),
+                'stand_total'     => $this->POST('stand_total'),
+                'tanggal'         => $this->POST('tanggal'),
                 'ganti_modem'     => $this->POST('ganti_modem'),
                 'ganti_meter'     => $this->POST('ganti_meter'),
                 'ganti_sim'       => $this->POST('ganti_sim'),
                 'ganti_pembatas'  => $this->POST('ganti_pembatas'),
-                'ganti_ct'        => $this->POST('ganti_ct')
+                'ganti_ct'        => $this->POST('ganti_ct'),
+                'id_pelanggan'    => $this->POST('id_pelanggan')
             ];
             $this->realisasi_m->insert($this->data['realisasi']);
             $this->flashmsg('Sukses Input Data.');
@@ -74,9 +127,9 @@ class Pegawai extends MY_Controller
             exit();
         }
 
-        $this->data['realisasi']    = $this->realisasi_m->get_row([ 'id_to' => $id_to ]);        
+        $this->data['realisasi']    = $id_to;               
         $this->data['title']        = 'Dashboard Admin';
-        $this->data['content']      = 'admin/realisasi_pegawai_update';
+        $this->data['content']      = 'pegawai/realisasi_pegawai_update';
         $this->template($this->data);
     }
 }

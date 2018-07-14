@@ -90,11 +90,16 @@
                                     <div class="form-group">
                                         <label>Tipe Meteran</label>
                                         <select required name='tipemeter' id='tipemeter' class="form-control">
+                                            <option> PILIH TIPE METER </option>
+                                            <?php foreach ($meter_tipe as $x) { ?>
+                                            <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Kelas Meteran</label>
                                         <select required name='kelasmeter' id='kelasmeter' class="form-control">
+                                            <option> PILIH KELAS METER </option>
                                             <?php foreach ($meter_kelas as $x) { ?>
                                             <option value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
                                             <?php } ?>
@@ -131,6 +136,10 @@
                                     <div class="form-group">
                                         <label>Tipe Modem</label>
                                         <select required name='tipemodem' id='tipemodem' class="form-control">
+                                            <option> PILIH TIPE MODEM </option>
+                                            <?php foreach ($modem_tipe as $x) { ?>
+                                            <option id="<?php echo $x->id; ?>" value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                     <hr>
