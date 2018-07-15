@@ -52,6 +52,8 @@ class Admin extends MY_Controller
         $this->load->model('data_pelanggan_m');
         $this->load->model('modem_m');
         $this->load->model('sim_card_m');
+        $this->load->model('ct_m');
+        $this->load->model('pembatas_arus_m');
 
         if($this->POST('submit')) {
             $this->data['sim'] = [
@@ -84,10 +86,22 @@ class Admin extends MY_Controller
                 'daya'      => $this->POST('daya'),
                 'status'    => $this->POST('status')
             ];
+            $this->data['pembatas_arus'] = [
+                'merkpembatas'  => $this->POST('merkpembatas'),
+                'tipepembatas'  => $this->POST('tipepembatas'),
+                'aruspembatas'  => $this->POST('aruspembatas'),
+                'id_pelanggan'  => $this->POST('id_pelanggan')
+            ];
+            $this->data['ct'] = [
+                'jenisct'       => $this->POST('jenisct'),
+                'id_pelanggan'  => $this->POST('id_pelanggan')
+            ];
             $this->sim_card_m->insert($this->data['sim']);
             $this->meter_m->insert($this->data['meter']);
             $this->modem_m->insert($this->data['modem']);
             $this->data_pelanggan_m->insert($this->data['pelanggan']);
+            $this->pembatas_arus_m->insert($this->data['pembatas_arus']);
+            $this->ct_m->insert($this->data['ct']);
             $this->flashmsg('Sukses Input Data.');
             redirect('admin/pegawai','refresh');
             exit();

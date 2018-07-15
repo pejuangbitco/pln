@@ -151,13 +151,55 @@
                                     </div>                          
                                     <div class="form-group">
                                         <label>Provider</label>
-                                        <select name='provider' id='provider' class="form-control">
+                                        <select required name='provider' id='provider' class="form-control">
                                             <option value="">Pilih Salah Satu</option>
                                             <?php foreach ($simcard_provider as $x) { ?>
                                             <option value='<?php echo $x->id; ?>'><?php echo $x->nama; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
+                                    <hr>
+                                    <h4>Data Pembatas</h4>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label>Merk Pembatas</label>                                
+                                        <select required name='merkpembatas' id='merkpembatas' class="form-control">
+                                            <option> PILIH MERK PEMBATAS </option>
+                                            <?php foreach ($pembatas_merk as $x) { ?>
+                                            <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tipe Pembatas</label>                                
+                                        <select required name='tipepembatas' id='tipepembatas' class="form-control">
+                                            <option> PILIH TIPE PEMBATAS </option>
+                                            <?php foreach ($pembatas_tipe as $x) { ?>
+                                            <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Arus Pembatas</label>                                
+                                        <select required name='aruspembatas' id='aruspembatas' class="form-control">
+                                            <option> PILIH ARUS PEMBATAS </option>
+                                            <?php foreach ($pembatas_arus as $x) { ?>
+                                            <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
+                                        </select> 
+                                    </div>
+                                    <hr>
+                                    <h4>Data CT</h4>
+                                    <div class="form-group">
+                                        <label>Jenis ct</label>                                
+                                        <select required name='jenisct' id='jenisct' class="form-control">
+                                            <option> PILIH JENIS CT </option>
+                                            <?php foreach ($ct_jenis as $x) { ?>
+                                            <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
+                                            <?php } ?>
+                                        </select>  
+                                    </div>
+
                                     <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                                 <?= form_close(); ?>    
                                 </div>
