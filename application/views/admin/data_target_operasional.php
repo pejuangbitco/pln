@@ -24,7 +24,7 @@
                                                 <th>Alasan</th>
                                                 <th>Tanggal</th>
                                                 <th>Pegawai</th>
-                                                <th>Status</th>
+                                                <!-- <th>Status</th> -->
                                                                                                                                     
                                                 <th>Aksi</th>
                                                 <!-- <th></th> -->
@@ -38,7 +38,7 @@
                                                 <td class="col-md-4"><?= $row->alasan ?></td>
                                                 <td><?= $row->date ?></td>
                                                 <td><?= $row->pegawai ?></td>
-                                                <td><?= $row->status ?></td>
+                                                <!-- <td><?= $row->status ?></td> -->
                                                                                                
                                                 <td align="center">
                                                                                              

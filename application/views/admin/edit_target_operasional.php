@@ -38,10 +38,10 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label>Status</label>
                                         <input type="text" value="<?= $target_operasional->status ?>" name="status" class="form-control">
-                                    </div>
+                                    </div> -->
 
                                     <input type="submit" name="edit" value="Submit" class="btn btn-primary">
                                 <?= form_close(); ?>    
