@@ -57,31 +57,32 @@ class Admin extends MY_Controller
 
         if($this->POST('submit')) {
             $this->data['sim'] = [
-                'nomor'       => $this->POST('nomor'),
+                'nomor'       => $this->POST('nomortlp'),
                 'provider'    => $this->POST('provider'),
-                'id_pelanggan'=> $this->POST('id_pelanggan')                
+                'id_pelanggan'=> $this->POST('idpel')                
             ];
             $this->data['meter'] = [
-                'merk'  => $this->POST('merk'),
-                'tipe'  => $this->POST('tipe'),
-                'kelas' => $this->POST('kelas'),
-                'tahun' => $this->POST('tahun'),
-                'arus'  => $this->POST('arus'),
-                'idpel' => $this->POST('id_pelanggan')             
+                'id_meter' => $this->POST('id_meter'),
+                'merk'  => $this->POST('merkmeter'),
+                'tipe'  => $this->POST('tipemeter'),
+                'kelas' => $this->POST('kelasmeter'),
+                'tahun' => $this->POST('tahunmeter'),
+                'arus'  => $this->POST('arusmeter'),
+                'idpel' => $this->POST('idpel')             
             ];
             $this->data['modem'] = [
-                'imei'          => $this->POST('imei'),
-                'merk'          => $this->POST('merk'),
-                'tipe'          => $this->POST('tipe'),
-                'id_pelanggan'  => $this->POST('id_pelanggan')
+                'imei'          => $this->POST('imeimodem'),
+                'merk'          => $this->POST('merkmodem'),
+                'tipe'          => $this->POST('tipemodem'),
+                'id_pelanggan'  => $this->POST('idpel')
             ];        
             $this->data['pelanggan'] = [
                 'unitupi'   => $this->POST('unitupi'),
                 'unitap'    => $this->POST('unitap'),
                 'unitup'    => $this->POST('unitup'),
-                'idpel'     => $this->POST('id_pelanggan'),
-                'nama'      => $this->POST('nama'),
-                'alamat'    => $this->POST('alamat'),
+                'idpel'     => $this->POST('idpel'),
+                'nama'      => $this->POST('namapel'),
+                'alamat'    => $this->POST('alamatpel'),
                 'tarif'     => $this->POST('tarif') ,
                 'daya'      => $this->POST('daya'),
                 'status'    => $this->POST('status')
@@ -90,11 +91,11 @@ class Admin extends MY_Controller
                 'merkpembatas'  => $this->POST('merkpembatas'),
                 'tipepembatas'  => $this->POST('tipepembatas'),
                 'aruspembatas'  => $this->POST('aruspembatas'),
-                'id_pelanggan'  => $this->POST('id_pelanggan')
+                'id_pelanggan'  => $this->POST('idpel')
             ];
             $this->data['ct'] = [
                 'jenisct'       => $this->POST('jenisct'),
-                'id_pelanggan'  => $this->POST('id_pelanggan')
+                'id_pelanggan'  => $this->POST('idpel')
             ];
             $this->sim_card_m->insert($this->data['sim']);
             $this->meter_m->insert($this->data['meter']);
