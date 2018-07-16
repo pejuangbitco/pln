@@ -54,6 +54,7 @@ class Admin extends MY_Controller
         $this->load->model('sim_card_m');
         $this->load->model('ct_m');
         $this->load->model('pembatas_arus_m');
+        $this->load->model('meter_m');
 
         if($this->POST('submit')) {
             $this->data['sim'] = [
@@ -62,11 +63,11 @@ class Admin extends MY_Controller
                 'id_pelanggan'=> $this->POST('idpel')                
             ];
             $this->data['meter'] = [
-                'id_meter' => $this->POST('id_meter'),
+                'id_meter' => $this->POST('idmeter'),
                 'merk'  => $this->POST('merkmeter'),
                 'tipe'  => $this->POST('tipemeter'),
                 'kelas' => $this->POST('kelasmeter'),
-                'tahun' => $this->POST('tahunmeter'),
+                'tahun_buat' => $this->POST('tahunbuat'),
                 'arus'  => $this->POST('arusmeter'),
                 'idpel' => $this->POST('idpel')             
             ];
@@ -81,30 +82,30 @@ class Admin extends MY_Controller
                 'unitap'    => $this->POST('unitap'),
                 'unitup'    => $this->POST('unitup'),
                 'idpel'     => $this->POST('idpel'),
-                'nama'      => $this->POST('namapel'),
+                'nama'      => $this->POST('nama'),
                 'alamat'    => $this->POST('alamatpel'),
                 'tarif'     => $this->POST('tarif') ,
                 'daya'      => $this->POST('daya'),
                 'status'    => $this->POST('status')
             ];
             $this->data['pembatas_arus'] = [
-                'merkpembatas'  => $this->POST('merkpembatas'),
-                'tipepembatas'  => $this->POST('tipepembatas'),
-                'aruspembatas'  => $this->POST('aruspembatas'),
+                'merk'  => $this->POST('merkpembatas'),
+                'tipe'  => $this->POST('tipepembatas'),
+                'arus'  => $this->POST('aruspembatas'),
                 'id_pelanggan'  => $this->POST('idpel')
             ];
             $this->data['ct'] = [
-                'jenisct'       => $this->POST('jenisct'),
+                'jenis'       => $this->POST('jenis_ct'),
                 'id_pelanggan'  => $this->POST('idpel')
             ];
+            $this->data_pelanggan_m->insert($this->data['pelanggan']);
             $this->sim_card_m->insert($this->data['sim']);
             $this->meter_m->insert($this->data['meter']);
-            $this->modem_m->insert($this->data['modem']);
-            $this->data_pelanggan_m->insert($this->data['pelanggan']);
+            $this->modem_m->insert($this->data['modem']);            
             $this->pembatas_arus_m->insert($this->data['pembatas_arus']);
             $this->ct_m->insert($this->data['ct']);
             $this->flashmsg('Sukses Input Data.');
-            redirect('admin/pegawai','refresh');
+            redirect('admin/pelanggan','refresh');
             exit();
         }
 

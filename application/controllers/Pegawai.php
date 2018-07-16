@@ -61,51 +61,51 @@ class Pegawai extends MY_Controller
         if($this->POST('submit')) {
             if($this->POST('ganti_modem') == 1) {
                 $this->data['modem'] = [
-                    'imeimodem'     => $this->POST('imeimodem'),
-                    'merkmodem'     => $this->POST('merkmodem'),
-                    'tipemodem'     => $this->POST('tipemodem'),
-                    'id_pelanggan'  => $this->POST('id_pelanggan')
-                ];
+                'imei'          => $this->POST('imeimodem'),
+                'merk'          => $this->POST('merkmodem'),
+                'tipe'          => $this->POST('tipemodem'),
+                'id_pelanggan'  => $this->POST('idpel')
+            ];  
                 $this->modem_m->insert($this->data['modem']);
             }            
             if($this->POST('ganti_meter') == 1) {
                 $this->data['meter'] = [
-                    'idmeter'       => $this->POST('idmeter'),
-                    'merkmeter'     => $this->POST('merkmeter'),
-                    'tipemeter'     => $this->POST('tipemeter'),
-                    'kelasmeter'    => $this->POST('kelasmeter'),
-                    'tahunbuat'     => $this->POST('tahunbuat'),
-                    'arusmeter'     => $this->POST('arusmeter'),
-                    'idpel'         => $this->POST('id_pelanggan')
-                ];
+                'id_meter' => $this->POST('idmeter'),
+                'merk'  => $this->POST('merkmeter'),
+                'tipe'  => $this->POST('tipemeter'),
+                'kelas' => $this->POST('kelasmeter'),
+                'tahun_buat' => $this->POST('tahunbuat'),
+                'arus'  => $this->POST('arusmeter'),
+                'idpel' => $this->POST('idpel')             
+            ];
                 $this->meter_m->insert($this->data['meter']);
             }
             if($this->POST('ganti_pembatas') == 1) {
                 $this->data['pembatas'] = [
-                    'merkpembatas'  => $this->POST('merkpembatas'),
-                    'tipepembatas'  => $this->POST('tipepembatas'),
-                    'aruspembatas'  => $this->POST('aruspembatas'),
-                    'id_pelanggan'  => $this->POST('id_pelanggan')
-                ];
+                'merk'  => $this->POST('merkpembatas'),
+                'tipe'  => $this->POST('tipepembatas'),
+                'arus'  => $this->POST('aruspembatas'),
+                'id_pelanggan'  => $this->POST('idpel')
+            ];
                 $this->pembatas_arus_m->insert($this->data['pembatas']);
             }
             if($this->POST('ganti_sim') == 1) {
                 $this->data['sim'] = [
-                    'nomortlp'      => $this->POST('nomortlp'),
-                    'provider'      => $this->POST('provider'),
-                    'id_pelanggan'  => $this->POST('id_pelanggan')
-                ];
+                'nomor'       => $this->POST('nomortlp'),
+                'provider'    => $this->POST('provider'),
+                'id_pelanggan'=> $this->POST('idpel')                
+            ];
                 $this->sim_card_m->insert($this->data['sim']);
             }
             if($this->POST('ganti_ct') == 1) {
                 $this->data['ct'] = [
-                    'jenisct'       => $this->POST('jenisct'),
-                    'id_pelanggan'  => $this->POST('id_pelanggan')
-                ];
+                'jenis'       => $this->POST('jenis_ct'),
+                'id_pelanggan'  => $this->POST('idpel')
+            ];
                 $this->ct_m->insert($this->data['ct']);
             }
             $this->data['realisasi'] = [
-                'id_to'           => $this->POST('id_to'),
+                'id_to'           => $id_to,
                 'arus_r'          => $this->POST('arus_r'),
                 'arus_s'          => $this->POST('arus_s'),
                 'arus_t'          => $this->POST('arus_t'),

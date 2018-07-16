@@ -12,96 +12,58 @@
                         <div class="col-md-8">
                         <?= form_open('pegawai/input_realisasi/'.$realisasi); ?>
                             <div class="form-group ">
-                                <label class="control-label">ID Pelanggan</label>
-                                <input type="text" name="id_pelanggan" required>     
+                                <label>ID Pelanggan </label>
+                                        <input type='text' pattern='[0-9]{12}' required name='idpel' id='idpel' maxlength="12" class="form-control">    
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Tanggal</label>
-                                <input type="date" name="tanggal" required>     
+                                <input type="date" name="tanggal" required class="form-control">     
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Ganti modem: </label>
                                 <input type="radio" value="0" name="ganti_modem" required>Tidak    
                                 <input type="radio" value="1" name="ganti_modem" required>Ya <br>
                                 <label>IMEI Modem </label>
-                                <input type='text' pattern='[0-9]' required name='imeimodem' id='imeimodem' maxlength="16" class="form-control"> 
-                                <label>Merk Modem</label>  
-                                <select required name='merkmodem' id='merkmodem' class="form-control" onChange="getModemTipe(this);">
-                                    <option> PILIH MERK MODEM </option>
-                                    <?php foreach ($modem_merk as $x) { ?>
-                                    <option id="<?php echo $x->id; ?>" value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                        <input type='text' pattern='[0-9]' required name='imeimodem' id='imeimodem' maxlength="16" class="form-control"> 
+                                <label>Merk Modem</label>
+                                        
+                                        <input type="text" name="merkmodem" class="form-control">
                                 <label>Tipe Modem</label>
-                                <select required name='tipemodem' id='tipemodem' class="form-control">
-                                    <option> PILIH TIPE MODEM </option>
-                                    <?php foreach ($modem_tipe as $x) { ?>
-                                    <option id="<?php echo $x->id; ?>" value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                        
+                                        <input type="text" name="tipemodem" class="form-control">
                             </div>    <hr>  
                             <div class="form-group ">
                                 <label class="control-label">Ganti meter: </label>
                                 <input type="radio" value="0" name="ganti_meter" required>Tidak    
                                 <input type="radio" value="1" name="ganti_meter" required>Ya <br>
                                 <label>Nomor Meteran </label>
-                                <input type='text' pattern='[0-9]' required name='idmeter' id='idmeter' maxlength="13" class="form-control">
+                                        <input type='text' required name='idmeter' id='idmeter' maxlength="13" class="form-control">
                                 <label>Merk Meteran</label>
-                                <select required name='merkmeter' id='merkmeter' class="form-control" onChange="getMeterTipe(this);">
-                                    <option> PILIH MERK METER </option>
-                                    <?php foreach ($meter_merk as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                        
+                                        <input type="text" name="merkmeter" class="form-control">
                                 <label>Tipe Meteran</label>
-                                <select required name='tipemeter' id='tipemeter' class="form-control">
-                                    <option> PILIH TIPE METER </option>
-                                    <?php foreach ($meter_tipe as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                        
+                                        <input type="text" name="tipemeter" class="form-control">
                                 <label>Kelas Meteran</label>
-                                <select required name='kelasmeter' id='kelasmeter' class="form-control">
-                                    <option> PILIH KELAS METER </option>
-                                    <?php foreach ($meter_kelas as $x) { ?>
-                                    <option value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                <input type="text" name="kelasmeter" class="form-control">
                                  <label>Tahun Pembuatan</label>
                                 <input type='text' pattern='[0-9]{4}' maxlength='4' required name='tahunbuat' id='tahunbuat' class="form-control">
                                 <label>Arus</label>
-                                <select required name='arusmeter' id='arusmeter' class="form-control">
-                                    <option>Pilih Salah Satu</option>
-                                    <?php foreach ($meter_arus as $x) { ?>
-                                    <option value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>  
+                                <label>Arus</label>
+                                        
+                                        <input type="text" name="arusmeter" class="form-control">
                             </div>  <hr>    
                             <div class="form-group ">
                                 <label class="control-label">Ganti pembatas: </label>
                                 <input type="radio" value="0" name="ganti_pembatas" required>Tidak    
                                 <input type="radio" value="1" name="ganti_pembatas" required>Ya <br>
                                 <label>Merk Pembatas</label>                                
-                                <select required name='merkpembatas' id='merkpembatas' class="form-control">
-                                    <option> PILIH MERK PEMBATAS </option>
-                                    <?php foreach ($pembatas_merk as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                <input type="text" name="merkpembatas" class="form-control">
                                 <label>Tipe Pembatas</label>                                
-                                <select required name='tipepembatas' id='tipepembatas' class="form-control">
-                                    <option> PILIH TIPE PEMBATAS </option>
-                                    <?php foreach ($pembatas_tipe as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>
+                                <input type="text" name="tipepembatas" class="form-control">
                                 <label>Arus Pembatas</label>                                
-                                <select required name='aruspembatas' id='aruspembatas' class="form-control">
-                                    <option> PILIH ARUS PEMBATAS </option>
-                                    <?php foreach ($pembatas_arus as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select> 
+                                        
+                                        <input type="text" name="aruspembatas" class="form-control">
                             </div>   <hr>   
                             <div class="form-group ">
                                 <label class="control-label">Ganti sim: </label>
@@ -110,24 +72,14 @@
                                 <label>Nomor</label>
                                 <input type='text' pattern='[0-9]' required name='nomortlp' id='nomortlp' maxlength="13" class="form-control">
                                 <label>Provider</label>
-                                <select name='provider' id='provider' class="form-control">
-                                    <option value="">Pilih Salah Satu</option>
-                                    <?php foreach ($simcard_provider as $x) { ?>
-                                    <option value='<?php echo $x->id; ?>'><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>     
+                                <input type="text" name="provider" class="form-control">  
                             </div>   <hr>   
                             <div class="form-group ">
                                 <label class="control-label">Ganti ct: </label>
                                 <input type="radio" value="0" name="ganti_ct" required>Tidak    
                                 <input type="radio" value="1" name="ganti_ct" required>Ya <br>
                                 <label>Jenis ct</label>                                
-                                <select required name='jenisct' id='jenisct' class="form-control">
-                                    <option> PILIH JENIS CT </option>
-                                    <?php foreach ($ct_jenis as $x) { ?>
-                                    <option id='<?php echo $x->id; ?>' value="<?php echo $x->id; ?>"><?php echo $x->nama; ?></option>
-                                    <?php } ?>
-                                </select>    
+                                <input type="text" name="jenis_ct" class="form-control"> 
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Arus R</label>

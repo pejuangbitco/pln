@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Jul 2018 pada 16.36
+-- Waktu pembuatan: 16 Jul 2018 pada 03.43
 -- Versi server: 10.1.33-MariaDB
 -- Versi PHP: 7.2.6
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `ct` (
   `id_ct` int(11) NOT NULL,
   `id_pelanggan` varchar(100) NOT NULL,
-  `jenis` int(11) NOT NULL
+  `jenis` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -60,11 +60,11 @@ CREATE TABLE `data_pelanggan` (
 
 CREATE TABLE `meter` (
   `id_meter` varchar(13) NOT NULL,
-  `merk` int(11) NOT NULL,
-  `tipe` int(11) NOT NULL,
-  `kelas` int(11) NOT NULL,
+  `merk` varchar(100) NOT NULL,
+  `tipe` varchar(100) NOT NULL,
+  `kelas` varchar(100) NOT NULL,
   `tahun_buat` int(11) NOT NULL,
-  `arus` int(11) NOT NULL,
+  `arus` varchar(100) NOT NULL,
   `idpel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -76,8 +76,8 @@ CREATE TABLE `meter` (
 
 CREATE TABLE `modem` (
   `imei` varchar(20) NOT NULL,
-  `merk` int(11) NOT NULL,
-  `tipe` int(11) NOT NULL,
+  `merk` varchar(100) NOT NULL,
+  `tipe` varchar(100) NOT NULL,
   `id_pelanggan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -142,7 +142,7 @@ CREATE TABLE `realisasi` (
 
 CREATE TABLE `sim_card` (
   `nomor` varchar(13) NOT NULL,
-  `provider` int(11) NOT NULL,
+  `provider` varchar(100) NOT NULL,
   `id_pelanggan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
