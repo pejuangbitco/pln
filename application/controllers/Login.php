@@ -30,17 +30,17 @@ class Login extends MY_Controller
 		if ($this->POST('login'))
 		{
 			$this->load->model('user_m');
-			if (!$this->user_m->required_input(['username','password'])) 
-			{
-				$this->flashmsg('Data harus lengkap','warning');
-				redirect('login');
-				exit;
-			}
+			// if (!$this->user_m->required_input(['username','password'])) 
+			// {
+			// 	$this->flashmsg('Data harus lengkap','warning');
+			// 	redirect('login');
+			// 	exit;
+			// }
 			
 			$this->data = [
 				'username'	=> $this->POST('username'),
-				//'password'	=> md5($this->POST('password'))
-				'password'	=> $this->POST('password')
+				'password'	=> md5($this->POST('password'))
+				// 'password'	=> $this->POST('password')
 			];
 
 			$result = $this->user_m->login($this->data['username'], $this->data['password']);

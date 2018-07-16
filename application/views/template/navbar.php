@@ -1,7 +1,7 @@
 <!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand" style="font-size: 20px;">
-				<a href="<?= base_url('admin') ?>"><b>Sistem Pendukung Keputusan</b></a>
+				<a href="<?= base_url('admin') ?>"><b>PLN</b></a>
 			</div>
 			<div class="container-fluid">
 				<div id="navbar-menu">

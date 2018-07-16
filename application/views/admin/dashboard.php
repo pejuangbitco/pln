@@ -10,7 +10,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <p>Selamat Datang, <?= $username ?></p>
-                                <p>Sistem Pendukung Keputusan Pemilihan Jurusan Seleksi Nasional Masuk Perguruan Tinggi Negeri ini dilakukan dengan metode Simple Multi Attribute Rating Technique (SMART) berdasarkan dengan perhitungan nilai raport siswa, prestasi, minat bakat serta hasil tes psikologi yang telah dilaksanakan.</p>
+                                <p></p>
                             </div>
 
                         </div>
