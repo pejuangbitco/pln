@@ -212,8 +212,7 @@ class Admin extends MY_Controller
             $this->data['target'] = [
                 'id_pelanggan'  => $this->POST('id_pelanggan'),
                 'alasan'        => $this->POST('alasan'),
-                'date'          => $this->POST('date'),
-                'status'        => $this->POST('status'),
+                'date'          => date("y-m-d"),
                 'pegawai'       => $this->POST('pegawai')
             ];
             $this->target_operasional_m->insert($this->data['target']);

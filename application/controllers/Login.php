@@ -19,9 +19,6 @@ class Login extends MY_Controller
 					redirect('admin');
 					exit;
 				case 2:
-					redirect('siswa');
-					exit;
-				case 3:
 					redirect('pegawai');
 					exit;
 			}
@@ -32,8 +29,8 @@ class Login extends MY_Controller
 	{
 		if ($this->POST('login'))
 		{
-			$this->load->model('login_m');
-			if (!$this->login_m->required_input(['username','password'])) 
+			$this->load->model('user_m');
+			if (!$this->user_m->required_input(['username','password'])) 
 			{
 				$this->flashmsg('Data harus lengkap','warning');
 				redirect('login');
@@ -46,7 +43,7 @@ class Login extends MY_Controller
 				'password'	=> $this->POST('password')
 			];
 
-			$result = $this->login_m->login($this->data['username'], $this->data['password']);
+			$result = $this->user_m->login($this->data['username'], $this->data['password']);
 			if (!isset($result)) 
 			{
 				$this->flashmsg('username atau password salah','danger');
