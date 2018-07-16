@@ -47,6 +47,50 @@ class Admin extends MY_Controller
         data meteran
         data simcard
     */
+
+    public function data_pelanggan()
+    {
+        $this->load->model('data_pelanggan_m');
+        
+        $this->data['pelanggan']    = $this->data_pelanggan_m->get();
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/data_pelanggan';
+        $this->template($this->data);
+    }
+
+    public function edit_pelanggan()
+    {
+        $this->load->model('data_pelanggan_m');
+        
+        $idpel = $this->uri->segment(3);
+        if(!isset($idpel)) {
+            redirect('admin/data_pelanggan','refresh');
+            exit();
+        }
+
+        if($this->POST('edit')) {
+            $this->data['pelanggan'] = [
+                'unitupi'   => $this->POST('unitupi'),
+                'unitap'    => $this->POST('unitap'),
+                'unitup'    => $this->POST('unitup'),                
+                'nama'      => $this->POST('nama'),
+                'alamat'    => $this->POST('alamatpel'),
+                'tarif'     => $this->POST('tarif') ,
+                'daya'      => $this->POST('daya'),
+                'status'    => $this->POST('status')
+            ];
+            $this->data_pelanggan_m->update_where(['idpel' => $idpel],$this->data['pelanggan']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
+
+        $this->data['pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $idpel ]);
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/edit_pelanggan';
+        $this->template($this->data);
+    }    
+
     public function pelanggan()
     {
         $this->load->model('data_pelanggan_m');
@@ -202,6 +246,55 @@ class Admin extends MY_Controller
     /*
         input TO ke pegawai mana yg ingin di target melakukan        
     */
+    public function data_target_operasional()
+    {
+        $this->load->model('target_operasional_m');
+        
+        $action = $this->uri->segment(3);
+        if(isset($action) && $action=='delete') {
+            $id = $this->uri->segment(4);
+            $this->target_operasional_m->delete($id);            
+            $this->flashmsg('Sukses Delete Data.');
+            redirect('admin/data_target_operasional','refresh');
+            exit();
+        }
+
+        $this->data['target_operasional'] = $this->target_operasional_m->get();
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/data_target_operasional';
+        $this->template($this->data);
+    }
+
+    public function edit_target_operasional()
+    {
+        $this->load->model('target_operasional_m');
+        
+        $id = $this->uri->segment(3);
+        if(!isset($id)) {
+            redirect('admin/data_target_operasional','refresh');
+            exit();
+        }
+
+        if($this->POST('edit')) {
+            $this->data['target'] = [
+                'id_pelanggan'  => $this->POST('id_pelanggan'),
+                'alasan'        => $this->POST('alasan'),                
+                'keterangan'    => $this->POST('keterangan'),
+                'pegawai'       => $this->POST('pegawai'),
+                'status'        => $this->POST('status')
+            ];
+            $this->target_operasional_m->update($id,$this->data['target']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_target_operasional/'.$id,'refresh');
+            exit();
+        }
+
+        $this->data['target_operasional'] = $this->target_operasional_m->get_row([ 'id_to' => $id ]);
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/edit_target_operasional';
+        $this->template($this->data);
+    }    
+
     public function target_operasional()
     {
         $this->load->model('target_operasional_m');
@@ -213,6 +306,7 @@ class Admin extends MY_Controller
                 'id_pelanggan'  => $this->POST('id_pelanggan'),
                 'alasan'        => $this->POST('alasan'),
                 'date'          => date("y-m-d"),
+                'keterangan'    => $this->POST('keterangan'),
                 'pegawai'       => $this->POST('pegawai')
             ];
             $this->target_operasional_m->insert($this->data['target']);

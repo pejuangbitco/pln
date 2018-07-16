@@ -6,15 +6,16 @@
                         <div class="panel-heading">
                             <?= $title ?>
                             <!--<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>-->
+                            <?=  $this->session->flashdata('msg'); ?>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
-                                <?= form_open('admin/target_operasional'); ?>
+                                <?= form_open('admin/edit_target_operasional/'. $target_operasional->id_to); ?>
                                     <div class="form-group">
                                         <label>ID Pelanggan </label>                                        
                                         <select name="id_pelanggan" class="form-control">
-                                            <option value="">-- ID Pelanggan --</option>
+                                            <option value="<?= $target_operasional->id_pelanggan ?>"><?= $target_operasional->id_pelanggan ?></option>
                                             <?php foreach ($pelanggan as $row) { ?>
                                                 <option value="<?= $row->idpel ?>"><?= $row->idpel ?></option>
                                             <?php } ?>
@@ -22,23 +23,27 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Alasan</label>
-                                        <textarea required name='alasan' id='alasanedit' class="form-control" rows="3"></textarea>
+                                        <textarea value="<?= $target_operasional->alasan ?>" required name='alasan' id='alasanedit' class="form-control" rows="3"><?= $target_operasional->alasan ?></textarea>
                                     </div>  
                                     <div class="form-group">
                                         <label>Keterangan</label>
-                                        <textarea required name='keterangan' id='keteranganedit' class="form-control" rows="3"></textarea>
-                                    </div>
-                                    
+                                        <textarea value="<?= $target_operasional->keterangan ?>" required name='keterangan' id='keteranganedit' class="form-control" rows="3"><?= $target_operasional->keterangan ?></textarea>
+                                    </div>                                    
                                     <div class="form-group">
                                         <label for="">Pegawai</label>                                        
                                         <select name="pegawai" class="form-control">
-                                            <option value="">-- Pegawai --</option>
+                                            <option value="<?= $target_operasional->pegawai ?>"><?= $target_operasional->pegawai ?></option>
                                             <?php foreach ($pegawai as $row) { ?>
                                                 <option value="<?= $row->username ?>"><?= $row->nama.'-'.$row->username ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input type="text" value="<?= $target_operasional->status ?>" name="status" class="form-control">
+                                    </div>
+
+                                    <input type="submit" name="edit" value="Submit" class="btn btn-primary">
                                 <?= form_close(); ?>    
                                 </div>
                             </div>
