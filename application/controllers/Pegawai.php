@@ -132,4 +132,30 @@ class Pegawai extends MY_Controller
         $this->data['content']      = 'pegawai/realisasi_pegawai_update';
         $this->template($this->data);
     }
+
+    public function geotag()
+    {
+        $this->load->model('geotag_m');
+        $this->load->model('Data_pelanggan_m');
+
+        if ($this->POST('simpan')) {
+            $this->geotag_m->insert([
+                'lon'   => $this->POST('longitude'),
+                'lat'   => $this->POST('latitude'),
+                'idpel' => $this->POST('idpel')
+            ]);
+
+            redirect('pegawai/geotag');exit;
+        }
+
+        if ($this->POST('get')) {
+            echo json_encode($this->geotag_m->get_row(['id' => $this->POST('id')]));
+            exit;
+        }
+        $this->data['data']    = $this->geotag_m->get();        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'pegawai/geotag';
+        $this->template($this->data);
+        
+    }
 }
