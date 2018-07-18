@@ -152,7 +152,10 @@ class Pegawai extends MY_Controller
             echo json_encode($this->geotag_m->get_row(['id' => $this->POST('id')]));
             exit;
         }
-
+        if ($this->POST('hapus')) {
+            $this->geotag_m->delete($this->POST('id'));
+            exit;
+        }
         if ($this->POST('edit')) {
             $this->geotag_m->update($this->POST('id'),[
                 'lon'   => $this->POST('longitude'),

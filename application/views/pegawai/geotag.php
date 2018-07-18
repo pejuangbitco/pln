@@ -5,26 +5,33 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                           <?= form_open('pegawai/geotag'); ?>
-                            <div class="form-group">
-                                <label for="">Pelanggan</label>
-                                <select name="idpel" class="form-control">
-                                    <option value="">Pilih Pelanggan</option>
-                                    <?php foreach ($this->Data_pelanggan_m->get() as $pel): ?>
-                                        
-                                        <option value="<?= $pel->id_pelanggan ?>"><?= $pel->id_pelanggan . ' - '. $pel->nama ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                           <div class="panel panel-success">
+                            <div class="panel-heading">
+                              <h4>Tambah Data Geotag</h4>
                             </div>
-                            <div class="form-group">
-                                <label>Pilih Koordinat</label>
-                                <div class="gmap" id="map-add" style="width: 100%; height: 250px;"></div>
-                                <p>Koordinat: <span id="map-add-latitude"></span>, <span id="map-add-longitude"></span></p>
-                                <input type="hidden" id="map-add-hidden_latitude" name="latitude" required>
-                                <input type="hidden" id="map-add-hidden_longitude" name="longitude" required>
-                            </div>
-                            <input type="submit" name="simpan" value="SIMPAN" class="btn btn-primary">
-                           <?= form_close(); ?>
+                              <div class="panel-body">
+                                <?= form_open('pegawai/geotag'); ?>
+                                <div class="form-group">
+                                    <label for="">Pelanggan</label>
+                                    <select name="idpel" class="form-control">
+                                        <option value="">Pilih Pelanggan</option>
+                                        <?php foreach ($this->Data_pelanggan_m->get() as $pel): ?>
+                                            
+                                            <option value="<?= $pel->idpel ?>"><?= $pel->idpel . ' - '. $pel->nama ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pilih Koordinat</label>
+                                    <div class="gmap" id="map-add" style="width: 100%; height: 500px;"></div>
+                                    <p>Koordinat: <span id="map-add-latitude"></span>, <span id="map-add-longitude"></span></p>
+                                    <input type="hidden" id="map-add-hidden_latitude" name="latitude" required>
+                                    <input type="hidden" id="map-add-hidden_longitude" name="longitude" required>
+                                </div>
+                                <input type="submit" name="simpan" value="SIMPAN" class="btn btn-primary">
+                                <?= form_close(); ?>
+                              </div>
+                           </div>
                         </div>
                     </div>
                     <div class="row">
@@ -43,9 +50,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Longitude</th>
-                                                <th>Latitude</th>
-                                                <th>Pelanggan</th>                
+                                                <th>Koordinat</th>
+                                                <th>Pelanggan</th>
+                                                <th>Alamat</th>                
                                                 <th>Aksi</th>
                                                 <!-- <th></th> -->
                                             </tr>
@@ -54,11 +61,11 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td><?= $row->lon ?></td>                                                
-                                                <td><?= $row->lat ?></td>
-                                                <td><?= $this->Data_pelanggan_m->get_row(['id_pelanggan' => $row->idpel])->nama ?></td>                            
+                                                <td><?= $row->lon .' , '. $row->lat ?></td>                                                
+                                                <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->nama ?></td>
+                                                <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->alamat ?></td>                            
                                                 <td align="center">
-                                                    <button class="btn btn-primary" onclick="_edit(<?= $row->id ?>)">Edit</button>
+                                                    <button class="btn btn-primary" onclick="_edit(<?= $row->id ?>)" data-toggle="modal" data-target="#edit">Edit</button>
                                                     <button class="btn btn-danger" onclick="_hapus(<?= $row->id ?>)">Hapus</button>                                               
                                                 </td>
                                             </tr>
@@ -136,7 +143,25 @@
                       $('#id').val(json.id);
                       $('#latitude').val(json.lat);
                       $('#longitude').val(json.lon);
-                      editMap('map-edit', json.lat, json.lonW);
+                      console.log(json);
+                      editMap('map-edit', json.lat, json.lon);
+                    },
+                    error: function(e) {
+                      console.log(e.responseText);
+                    }
+                  });
+                }
+
+                function _hapus(id) {
+                  $.ajax({
+                    url: '<?= base_url('pegawai/geotag') ?>',
+                    type: 'POST',
+                    data: {
+                      id: id,
+                      hapus: true
+                    },
+                    success: function() {
+                      window.location = '<?= base_url('pegawai/geotag/') ?>';
                     },
                     error: function(e) {
                       console.log(e.responseText);
