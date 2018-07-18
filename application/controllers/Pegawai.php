@@ -145,7 +145,11 @@ class Pegawai extends MY_Controller
                 'idpel' => $this->POST('idpel')
             ]);
 
-            redirect('pegawai/geotag');exit;
+            if (!empty($_FILES['foto']['name']))
+                $this->upload($this->db->insert_id(),'img/geotag', 'foto');
+
+            redirect('pegawai/geotag');
+            exit;
         }
 
         if ($this->POST('get')) {
@@ -162,6 +166,9 @@ class Pegawai extends MY_Controller
                 'lat'   => $this->POST('latitude'),
                 // 'idpel' => $this->POST('idpel')
             ]);
+            
+            if (!empty($_FILES['foto']['name']))
+                $this->upload($this->POST('id'),'img/berita', 'foto');
 
             redirect('pegawai/geotag');exit;
         }
