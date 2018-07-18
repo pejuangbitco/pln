@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Jul 2018 pada 03.43
+-- Waktu pembuatan: 18 Jul 2018 pada 04.26
 -- Versi server: 10.1.33-MariaDB
 -- Versi PHP: 7.2.6
 
@@ -41,7 +41,6 @@ CREATE TABLE `ct` (
 --
 
 CREATE TABLE `data_pelanggan` (
-  `unitupi` int(11) NOT NULL,
   `unitap` int(11) NOT NULL,
   `unitup` int(11) NOT NULL,
   `idpel` varchar(100) NOT NULL,
@@ -49,7 +48,21 @@ CREATE TABLE `data_pelanggan` (
   `alamat` text NOT NULL,
   `tarif` int(11) NOT NULL,
   `daya` int(11) NOT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+  `unitupi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `geotag`
+--
+
+CREATE TABLE `geotag` (
+  `id` int(11) NOT NULL,
+  `lon` varchar(10) NOT NULL,
+  `lat` varchar(10) NOT NULL,
+  `idpel` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -157,7 +170,6 @@ CREATE TABLE `target_operasional` (
   `id_pelanggan` varchar(100) NOT NULL,
   `alasan` text NOT NULL,
   `date` date NOT NULL,
-  `status` int(11) NOT NULL,
   `pegawai` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -187,8 +199,14 @@ ALTER TABLE `ct`
 -- Indeks untuk tabel `data_pelanggan`
 --
 ALTER TABLE `data_pelanggan`
-  ADD PRIMARY KEY (`unitupi`),
+  ADD PRIMARY KEY (`idpel`),
   ADD KEY `idpel` (`idpel`);
+
+--
+-- Indeks untuk tabel `geotag`
+--
+ALTER TABLE `geotag`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `meter`
@@ -257,6 +275,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `ct`
   MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `geotag`
+--
+ALTER TABLE `geotag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `realisasi`
