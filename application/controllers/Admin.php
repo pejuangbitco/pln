@@ -61,7 +61,12 @@ class Admin extends MY_Controller
     public function edit_pelanggan()
     {
         $this->load->model('data_pelanggan_m');
-        
+        $this->load->model('sim_card_m');
+        $this->load->model('modem_m');
+        $this->load->model('meter_m');
+        $this->load->model('pembatas_arus_m');
+        $this->load->model('ct_m');
+
         $idpel = $this->uri->segment(3);
         if(!isset($idpel)) {
             redirect('admin/data_pelanggan','refresh');
@@ -86,6 +91,11 @@ class Admin extends MY_Controller
         }
 
         $this->data['pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $idpel ]);
+        $this->data['sim_card']     = $this->sim_card_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['modem']        = $this->modem_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['meter']        = $this->meter_m->get([ 'idpel' => $idpel ]);
+        $this->data['pembatas']     = $this->pembatas_arus_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['ct']           = $this->ct_m->get([ 'id_pelanggan' => $idpel ]);
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/edit_pelanggan';
         $this->template($this->data);
@@ -100,7 +110,7 @@ class Admin extends MY_Controller
         $this->load->model('pembatas_arus_m');
         $this->load->model('meter_m');
 
-        if($this->POST('submit')) {
+        if($this->POST('jenis_ct')) {
             $this->data['sim'] = [
                 'nomor'       => $this->POST('nomortlp'),
                 'provider'    => $this->POST('provider'),
@@ -268,7 +278,8 @@ class Admin extends MY_Controller
     public function edit_target_operasional()
     {
         $this->load->model('target_operasional_m');
-        
+        $this->load->model('data_pelanggan_m');
+
         $id = $this->uri->segment(3);
         if(!isset($id)) {
             redirect('admin/data_target_operasional','refresh');
@@ -290,6 +301,8 @@ class Admin extends MY_Controller
         }
 
         $this->data['target_operasional'] = $this->target_operasional_m->get_row([ 'id_to' => $id ]);
+        $this->data['this_pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $this->data['target_operasional']->id_pelanggan ]);
+        $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/edit_target_operasional';
         $this->template($this->data);
@@ -384,6 +397,21 @@ class Admin extends MY_Controller
         $this->data['title']                = 'Dashboard Admin';
         $this->data['content']              = 'admin/edit_realisasi';
         $this->template($this->data);
+    }
+
+    public function ajax_getPelanggan() 
+    {
+        $this->load->model('data_pelanggan_m');
+
+        $id = $this->uri->segment(3);
+        if(!isset($id)) {
+            redirect('admin','refresh');
+            exit();
+        }
+
+        $data = $this->data_pelanggan_m->get_row([ 'idpel' => $id ]);
+        $data = '<option>'.$data->nama.'</option>';
+        echo $data;
     }
 
 

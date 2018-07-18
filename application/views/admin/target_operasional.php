@@ -6,6 +6,7 @@
                         <div class="panel-heading">
                             <?= $title ?>
                             <!--<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>-->
+                            <?php echo $this->session->flashdata('msg'); ?>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -13,13 +14,13 @@
                                 <?= form_open('admin/target_operasional'); ?>
                                     <div class="form-group">
                                         <label>ID Pelanggan </label>                                        
-                                        <select name="id_pelanggan" class="form-control">
+                                        <select id="ids" name="id_pelanggan" class="form-control">
                                             <option value="">-- ID Pelanggan --</option>
                                             <?php foreach ($pelanggan as $row) { ?>
-                                                <option value="<?= $row->idpel ?>"><?= $row->idpel ?></option>
+                                                <option value="<?= $row->idpel ?>"><?= $row->idpel.' - '.$row->nama.' - '.$row->alamat ?></option>
                                             <?php } ?>
                                         </select>
-                                    </div>
+                                    </div>                               
                                     <div class="form-group">
                                         <label>Alasan</label>
                                         <textarea required name='alasan' id='alasanedit' class="form-control" rows="3"></textarea>
@@ -48,3 +49,5 @@
                 </div>
             </div>
         </div>
+        
+        
