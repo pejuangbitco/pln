@@ -15,9 +15,9 @@
                                     <div class="form-group">
                                         <label>ID Pelanggan </label>                                        
                                         <select name="id_pelanggan" class="form-control">
-                                            <option value="<?= $target_operasional->id_pelanggan ?>"><?= $target_operasional->id_pelanggan ?></option>
+                                            <option value="<?= $target_operasional->id_pelanggan ?>"><?= $target_operasional->id_pelanggan.' - '.$this_pelanggan->nama.' - '.$this_pelanggan->alamat ?></option>
                                             <?php foreach ($pelanggan as $row) { ?>
-                                                <option value="<?= $row->idpel ?>"><?= $row->idpel ?></option>
+                                                <option value="<?= $row->idpel ?>"><?= $row->idpel.' - '.$row->nama.' - '.$row->alamat ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
