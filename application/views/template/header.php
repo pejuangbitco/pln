@@ -36,7 +36,7 @@
     <!-- TinyMCE -->
     <script src="<?=base_url('assets/vendor/tinymce/jquery.tinymce.min.js')?>"></script>
     <script src="<?=base_url('assets/vendor/tinymce/tinymce.js')?>"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcsdhzlDXAOHihT8kYUqvxBPhXDv4qtm0"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC24ZZQszcxML_aax1ZiMFty9gDeo58Lg0"></script>
     <style type="text/css">
         tr th, tr td {text-align: center; padding: 1%;}
     </style>

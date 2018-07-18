@@ -3,63 +3,43 @@
             <!-- MAIN CONTENT -->
             <div class="main-content">
                 <div class="container-fluid">
+                    <h4>Data Geotag</h4><hr>
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                           <?= form_open('pegawai/geotag'); ?>
-                            <div class="form-group">
-                                <label for="">Pelanggan</label>
-                                <select name="idpel" class="form-control">
-                                    <option value="">Pilih Pelanggan</option>
-                                    <?php foreach ($this->Data_pelanggan_m->get() as $pel): ?>
-                                        
-                                        <option value="<?= $pel->id_pelanggan ?>"><?= $pel->id_pelanggan . ' - '. $pel->nama ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Pilih Koordinat</label>
-                                <div class="gmap" id="map-add" style="width: 100%; height: 250px;"></div>
-                                <p>Koordinat: <span id="map-add-latitude"></span>, <span id="map-add-longitude"></span></p>
-                                <input type="hidden" id="map-add-hidden_latitude" name="latitude" required>
-                                <input type="hidden" id="map-add-hidden_longitude" name="longitude" required>
-                            </div>
-                            <input type="submit" name="simpan" value="SIMPAN" class="btn btn-primary">
-                           <?= form_close(); ?>
-                        </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="map" style="width: 100%; height: 300px;"></div>
+                      </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <?= $title ?>
-                                </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <style type="text/css">
                                         tr th, tr td {text-align: center; padding: 1%;}
                                     </style>
-                                    <?= $this->session->flashdata('msg') ?>                                    
+                                    <?= $this->session->flashdata('msg') ?>
                                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Longitude</th>
-                                                <th>Latitude</th>
-                                                <th>Pelanggan</th>                
+                                                <th>Nama Pelanggan</th>
+                                                <th>Alamat</th>                       
                                                 <th>Aksi</th>
                                                 <!-- <th></th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i=1; foreach($data as $row): ?>
+                                            <?php $i=1; foreach($geotag as $row): ?>
+                                            <?php $pelanggan = $this->data_pelanggan_m->get_row(['idpel' => $row->idpel]); ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td><?= $row->lon ?></td>                                                
-                                                <td><?= $row->lat ?></td>
-                                                <td><?= $this->Data_pelanggan_m->get_row(['id_pelanggan' => $row->idpel])->nama ?></td>                            
+                                                <td><?= $pelanggan->nama ?></td>
+                                                <td class="col-md-4"><?= $pelanggan->alamat ?></td>
+                                                                                                
                                                 <td align="center">
-                                                    <button class="btn btn-primary" onclick="_edit(<?= $row->id ?>)">Edit</button>
-                                                    <button class="btn btn-danger" onclick="_hapus(<?= $row->id ?>)">Hapus</button>                                               
+                                                
+                                                <button class="btn btn-primary" onclick="_edit(<?= $row->id ?>)">Edit</button>
+                                                    <button class="btn btn-danger" onclick="_hapus(<?= $row->id ?>)">Hapus</button>
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>
@@ -79,10 +59,9 @@
             </div>
         </div>
 
-
-<div class="modal fade" tabindex="-1" role="dialog" id="edit">
+        <div class="modal fade" tabindex="-1" role="dialog" id="edit">
               <div class="modal-dialog" role="document">
-                <?= form_open_multipart('pegawai/geotag') ?>
+                <?= form_open_multipart('admin/geotag') ?>
                <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -117,7 +96,7 @@
             <script>
                 $(document).ready(function() {
                     $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
-                    initMap('map-add');
+                    initMap();
                     $('#dataTables-example').DataTable({
                         responsive: true
                     });
@@ -125,7 +104,7 @@
 
                 function _edit(id) {
                   $.ajax({
-                    url: '<?= base_url('pegawai/geotag') ?>',
+                    url: '<?= base_url('admin/geotag') ?>',
                     type: 'POST',
                     data: {
                       id: id,
@@ -143,29 +122,24 @@
                     }
                   });
                 }
-                function initMap(id) {
-                  $('#' + id + '-latitude').text('');
-                  $('#' + id + '-longitude').text('');
-                  $('#' + id + '-hidden_latitude').val(null);
-                  $('#' + id + '-hidden_longitude').val(null);
+                function initMap() {
                   var coordinate = {lat: -6.121435, lng: 106.774124};
-                  var map = new google.maps.Map(document.getElementById(id), {
+                  var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 8,
                     center: coordinate
                   });
-                  var marker = new google.maps.Marker({
-                    position: coordinate,
-                    map: map
-                  });
-                  google.maps.event.addListener(map, 'click', function(event){
-                    var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-                    marker.setPosition(latLng);
-                    $('#' + id + '-latitude').text(event.latLng.lat());
-                    $('#' + id + '-longitude').text(event.latLng.lng());
-                    $('#' + id + '-hidden_latitude').val(event.latLng.lat());
-                    $('#' + id + '-hidden_longitude').val(event.latLng.lng());
 
-                  });
+                  <?php foreach ($geotag as $row): ?>
+                    var marker_<?= $row->id ?> = new google.maps.Marker({
+                      position: {lat: <?= $row->lat ?>, lng: <?= $row->lon ?>},
+                      map: map
+                    });
+                    var infoWindow_<?= $row->id ?> = new google.maps.InfoWindow({
+                      content: '<?= $this->data_pelanggan_m->get_row(["idpel" => $row->idpel])->nama ?>'
+                    });
+                    infoWindow_<?= $row->id ?>.open(map, marker_<?= $row->id ?>);
+                  <?php endforeach; ?>
+                  
                   google.maps.event.addListener(map, 'mousemove', function(event){
                     map.setOptions({draggableCursor: 'pointer'});
                   });

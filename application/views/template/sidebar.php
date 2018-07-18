@@ -10,7 +10,8 @@
                         <li><a href="<?= base_url('admin/pegawai') ?>" class=""><i class="fa fa-table"></i> <span>Data pegawai</span></a></li>
                         <li><a href="<?= base_url('admin/target_operasional') ?>" class=""><i class="fa fa-edit"></i> <span>Input Target Operasional</span></a></li>
                         <li><a href="<?= base_url('admin/data_target_operasional') ?>" class=""><i class="fa fa-edit"></i> <span>List Target Operasional</span></a></li>
-                        <li><a href="<?= base_url('admin/realisasi') ?>" class=""><i class="fa fa-edit"></i> <span>realisasi</span></a></li>                       
+                        <li><a href="<?= base_url('admin/realisasi') ?>" class=""><i class="fa fa-edit"></i> <span>Realisasi</span></a></li>              
+                        <li><a href="<?= base_url('admin/geotag') ?>" class=""><i class="fa fa-globe"></i> <span>Data Geotag</span></a></li>             
                     </ul>
                 <?php elseif ($this->session->userdata('role') == 2): ?>
                     <ul class="nav">

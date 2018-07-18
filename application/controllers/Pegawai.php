@@ -152,6 +152,16 @@ class Pegawai extends MY_Controller
             echo json_encode($this->geotag_m->get_row(['id' => $this->POST('id')]));
             exit;
         }
+
+        if ($this->POST('edit')) {
+            $this->geotag_m->update($this->POST('id'),[
+                'lon'   => $this->POST('longitude'),
+                'lat'   => $this->POST('latitude'),
+                // 'idpel' => $this->POST('idpel')
+            ]);
+
+            redirect('pegawai/geotag');exit;
+        }
         $this->data['data']    = $this->geotag_m->get();        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'pegawai/geotag';

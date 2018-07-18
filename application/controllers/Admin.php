@@ -191,7 +191,7 @@ class Admin extends MY_Controller
         if($this->POST('submit')) {
             $this->data['user'] = [
                 'username'  => $this->POST('username'),
-                'password'  => $this->POST('password'),
+                'password'  => md5($this->POST('password')),
                 'role'      => 2
             ];            
             $this->data['pegawai'] = [
@@ -414,6 +414,27 @@ class Admin extends MY_Controller
         echo $data;
     }
 
+    public function geotag($value='')
+    {
+        $this->load->model('geotag_m');
+        $this->load->model('data_pelanggan_m');
+        if ($this->POST('get')) {
+            echo json_encode($this->geotag_m->get_row(['id' => $this->POST('id')]));
+            exit;
+        }
+        if ($this->POST('edit')) {
+            $this->geotag_m->update($this->POST('id'),[
+                'lon'   => $this->POST('longitude'),
+                'lat'   => $this->POST('latitude'),
+                // 'idpel' => $this->POST('idpel')
+            ]);
 
+            redirect('admin/geotag');exit;
+        }
+        $this->data['geotag']               = $this->geotag_m->get();        
+        $this->data['title']                = 'Dashboard Admin';
+        $this->data['content']              = 'admin/geotag';
+        $this->template($this->data);
+    }
 
 }
