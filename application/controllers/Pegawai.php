@@ -146,7 +146,7 @@ class Pegawai extends MY_Controller
             ]);
 
             if (!empty($_FILES['foto']['name']))
-                $this->upload($this->db->insert_id(),'img/geotag', 'foto');
+                $this->upload($this->db->insert_id(),'geotag', 'foto');
 
             redirect('pegawai/geotag');
             exit;

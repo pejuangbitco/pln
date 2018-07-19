@@ -152,14 +152,20 @@ class Admin extends MY_Controller
                 'jenis'       => $this->POST('jenis_ct'),
                 'id_pelanggan'  => $this->POST('idpel')
             ];
-            $this->data_pelanggan_m->insert($this->data['pelanggan']);
+            
+            if (!$this->data_pelanggan_m->insert($this->data['pelanggan'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
             if (!$this->sim_card_m->insert($this->data['sim'])) {
                 $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
                 $this->flashmsg('duplicate entry','warning');
                 redirect('admin/pelanggan','refresh');
                 exit();
             }
-            if (!$this->meter_m->insert($this->data['sim'])) {
+            if (!$this->meter_m->insert($this->data['meter'])) {
                 $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
                 $this->sim_card_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
                 $this->flashmsg('duplicate entry','warning');
@@ -338,6 +344,7 @@ class Admin extends MY_Controller
 
         $this->data['target_operasional'] = $this->target_operasional_m->get_row([ 'id_to' => $id ]);
         $this->data['this_pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $this->data['target_operasional']->id_pelanggan ]);
+        
         $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/edit_target_operasional';
@@ -358,6 +365,7 @@ class Admin extends MY_Controller
                 'keterangan'    => $this->POST('keterangan'),
                 'pegawai'       => $this->POST('pegawai')
             ];
+            
             $this->target_operasional_m->insert($this->data['target']);
             $this->flashmsg('Sukses Input Data.');
             redirect('admin/target_operasional','refresh');
