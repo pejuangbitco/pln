@@ -399,21 +399,6 @@ class Admin extends MY_Controller
         $this->template($this->data);
     }
 
-    public function ajax_getPelanggan() 
-    {
-        $this->load->model('data_pelanggan_m');
-
-        $id = $this->uri->segment(3);
-        if(!isset($id)) {
-            redirect('admin','refresh');
-            exit();
-        }
-
-        $data = $this->data_pelanggan_m->get_row([ 'idpel' => $id ]);
-        $data = '<option>'.$data->nama.'</option>';
-        echo $data;
-    }
-
     public function geotag($value='')
     {
         $this->load->model('geotag_m');

@@ -7,12 +7,12 @@ class Pegawai extends MY_Controller
 	public function __construct()
     {
         parent::__construct();
-        // $array = array(
-        //     'username' => 'syad',
-        //     'role'  => 2
-        // );
+        $array = array(
+            'username' => 'syad',
+            'role'  => 2
+        );
         
-        // $this->session->set_userdata( $array );
+        $this->session->set_userdata( $array );
         $this->data['username']   = $this->session->userdata('username');
         $this->data['role']       = $this->session->userdata('role');
         if (!isset($this->data['username'], $this->data['role']))
