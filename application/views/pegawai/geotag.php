@@ -12,6 +12,10 @@
                               <div class="panel-body">
                                 <?= form_open('pegawai/geotag'); ?>
                                 <div class="form-group">
+                                  <label for="">Foto</label>
+                                  <input type="file" name="foto" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     <label for="">Pelanggan</label>
                                     <select name="idpel" class="form-control">
                                         <option value="">Pilih Pelanggan</option>
@@ -97,6 +101,13 @@
                   </div>
                   <div class="modal-body">
                         <input type="hidden" name="id" id="id">
+                        <center>
+                          <img class="img img-responsive" width="500px" id="img">
+                        </center>
+                        <div class="form-group">
+                                  <label for="">Foto</label>
+                                  <input type="file" name="foto" class="form-control">
+                                </div>
                         <div class="form-group">
                           <label>Pilih Koordinat Jalan</label>
                           <div class="gmap" id="map-edit" style="width: 100%; height: 250px;"></div>
@@ -144,6 +155,8 @@
                       $('#latitude').val(json.lat);
                       $('#longitude').val(json.lon);
                       console.log(json);
+                      id = '<?= base_url("assets/img/geotag/") ?>' + json.id + '.jpg';
+                      $("#img").attr('src' , id);
                       editMap('map-edit', json.lat, json.lon);
                     },
                     error: function(e) {
