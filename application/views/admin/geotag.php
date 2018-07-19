@@ -22,6 +22,8 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th></th>
+                                                <th>Koordinat</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Alamat</th>    
                                                 <!-- <th></th> -->
@@ -32,6 +34,10 @@
                                             <?php $pelanggan = $this->data_pelanggan_m->get_row(['idpel' => $row->idpel]); ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
+                                                <td>
+                                                  <img src="<?= base_url('assets/img/geotag/' . $row->id .'.jpg') ?>" class="img img-thumbnail" width="200px">
+                                                </td>
+                                                <td><?= $row->lon .' , '. $row->lat ?></td>     
                                                 <td><?= $pelanggan->nama ?></td>
                                                 <td class="col-md-4"><?= $pelanggan->alamat ?></td>
                                                                                                 

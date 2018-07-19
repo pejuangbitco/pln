@@ -10,7 +10,7 @@
                               <h4>Tambah Data Geotag</h4>
                             </div>
                               <div class="panel-body">
-                                <?= form_open('pegawai/geotag'); ?>
+                                <?= form_open_multipart('pegawai/geotag'); ?>
                                 <div class="form-group">
                                   <label for="">Foto</label>
                                   <input type="file" name="foto" class="form-control">
@@ -54,6 +54,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th></th>
                                                 <th>Koordinat</th>
                                                 <th>Pelanggan</th>
                                                 <th>Alamat</th>                
@@ -65,6 +66,9 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
+                                                <td>
+                                                  <img src="<?= base_url('assets/img/geotag/' . $row->id .'.jpg') ?>" class="img img-thumbnail" width="200px">
+                                                </td>
                                                 <td><?= $row->lon .' , '. $row->lat ?></td>                                                
                                                 <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->nama ?></td>
                                                 <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->alamat ?></td>                            
