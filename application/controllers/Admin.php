@@ -153,11 +153,47 @@ class Admin extends MY_Controller
                 'id_pelanggan'  => $this->POST('idpel')
             ];
             $this->data_pelanggan_m->insert($this->data['pelanggan']);
-            $this->sim_card_m->insert($this->data['sim']);
-            $this->meter_m->insert($this->data['meter']);
-            $this->modem_m->insert($this->data['modem']);            
-            $this->pembatas_arus_m->insert($this->data['pembatas_arus']);
-            $this->ct_m->insert($this->data['ct']);
+            if (!$this->sim_card_m->insert($this->data['sim'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
+            if (!$this->meter_m->insert($this->data['sim'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->sim_card_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
+            if (!$this->modem_m->insert($this->data['modem'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->sim_card_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->meter_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
+            if (!$this->pembatas_arus_m->insert($this->data['pembatas_arus'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->sim_card_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->meter_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->modem_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
+            if (!$this->ct_m->insert($this->data['ct'])) {
+                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
+                $this->sim_card_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->meter_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->modem_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->pembatas_arus_m->delete_by(['id_pelanggan' => $this->data['pelanggan']['id_pelanggan']]);
+                $this->flashmsg('duplicate entry','warning');
+                redirect('admin/pelanggan','refresh');
+                exit();
+            }
+            
             $this->flashmsg('Sukses Input Data.');
             redirect('admin/pelanggan','refresh');
             exit();
