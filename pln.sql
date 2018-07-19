@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Jul 2018 pada 04.26
+-- Waktu pembuatan: 19 Jul 2018 pada 04.12
 -- Versi server: 10.1.33-MariaDB
 -- Versi PHP: 7.2.6
 
@@ -34,6 +34,13 @@ CREATE TABLE `ct` (
   `jenis` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `ct`
+--
+
+INSERT INTO `ct` (`id_ct`, `id_pelanggan`, `jenis`) VALUES
+(1, '987221212121', 'asa');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +58,14 @@ CREATE TABLE `data_pelanggan` (
   `status` int(11) NOT NULL,
   `unitupi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `data_pelanggan`
+--
+
+INSERT INTO `data_pelanggan` (`unitap`, `unitup`, `idpel`, `nama`, `alamat`, `tarif`, `daya`, `status`, `unitupi`) VALUES
+(2, 2, '982716251515', 'KKKK', 'asasa', 88, 88, 1, 2),
+(1, 1, '987221212121', 'Rezi Apriliansyaha', 'asa', 900, 900, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -81,6 +96,13 @@ CREATE TABLE `meter` (
   `idpel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `meter`
+--
+
+INSERT INTO `meter` (`id_meter`, `merk`, `tipe`, `kelas`, `tahun_buat`, `arus`, `idpel`) VALUES
+('1212', 'a', 'as', '12', 2013, '90', '987221212121');
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +116,13 @@ CREATE TABLE `modem` (
   `id_pelanggan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `modem`
+--
+
+INSERT INTO `modem` (`imei`, `merk`, `tipe`, `id_pelanggan`) VALUES
+('9797012916261826', 'amam', '0', '987221212121');
+
 -- --------------------------------------------------------
 
 --
@@ -105,6 +134,13 @@ CREATE TABLE `pegawai` (
   `nama` text NOT NULL,
   `nama_team` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pegawai`
+--
+
+INSERT INTO `pegawai` (`username`, `nama`, `nama_team`) VALUES
+('syad', 'suad', 'asa');
 
 -- --------------------------------------------------------
 
@@ -119,6 +155,13 @@ CREATE TABLE `pembatas_arus` (
   `tipe` varchar(100) NOT NULL,
   `arus` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pembatas_arus`
+--
+
+INSERT INTO `pembatas_arus` (`id_pembatas`, `id_pelanggan`, `merk`, `tipe`, `arus`) VALUES
+(1, '987221212121', 'asa', 'asas', 'asas');
 
 -- --------------------------------------------------------
 
@@ -159,6 +202,13 @@ CREATE TABLE `sim_card` (
   `id_pelanggan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `sim_card`
+--
+
+INSERT INTO `sim_card` (`nomor`, `provider`, `id_pelanggan`) VALUES
+('08981073502', 'tsel', '987221212121');
+
 -- --------------------------------------------------------
 
 --
@@ -173,6 +223,13 @@ CREATE TABLE `target_operasional` (
   `pegawai` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `target_operasional`
+--
+
+INSERT INTO `target_operasional` (`id_to`, `id_pelanggan`, `alasan`, `date`, `pegawai`) VALUES
+(1, '99876', 'asaasas', '2018-07-16', 'syad');
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +241,14 @@ CREATE TABLE `user` (
   `password` varchar(33) NOT NULL,
   `role` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`username`, `password`, `role`) VALUES
+('admin', '202cb962ac59075b964b07152d234b70', '1'),
+('syad', '202cb962ac59075b964b07152d234b70', '2');
 
 --
 -- Indexes for dumped tables
@@ -274,13 +339,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `geotag`
 --
 ALTER TABLE `geotag`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembatas_arus`
+--
+ALTER TABLE `pembatas_arus`
+  MODIFY `id_pembatas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `realisasi`
@@ -292,7 +363,7 @@ ALTER TABLE `realisasi`
 -- AUTO_INCREMENT untuk tabel `target_operasional`
 --
 ALTER TABLE `target_operasional`
-  MODIFY `id_to` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_to` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
