@@ -7,12 +7,12 @@ class Admin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        // $array = array(
-        //     'username' => 'adminn',
-        //     'role' => 1
-        // );
+        $array = array(
+            'username' => 'adminn',
+            'role' => 1
+        );
         
-        // $this->session->set_userdata( $array );
+        $this->session->set_userdata( $array );
         $this->data['username']      = $this->session->userdata('username');
         $this->data['role']  = $this->session->userdata('role');
         if (!isset($this->data['username'], $this->data['role']))

@@ -16,7 +16,8 @@
                 <?php elseif ($this->session->userdata('role') == 2): ?>
                     <ul class="nav">
                         <li><a href="<?= base_url('pegawai/') ?>" ><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-                        <li><a href="<?= base_url('pegawai/realisasi') ?>"><i class="fa fa-file"></i> <span>Realisasi</span></a></li>      
+                        <li><a href="<?= base_url('pegawai/input_realisasi') ?>"><i class="fa fa-file"></i> <span>Input Realisasi</span></a></li>
+                        <li><a href="<?= base_url('pegawai/realisasi') ?>"><i class="fa fa-file"></i> <span>List Realisasi</span></a></li>      
                         <li><a href="<?= base_url('pegawai/geotag') ?>"><i class="fa fa-file"></i> <span>Geotag</span></a></li>                        
                     </ul>
                 <?php endif; ?>               
