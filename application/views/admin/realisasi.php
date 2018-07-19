@@ -36,7 +36,8 @@
                                                 <td align="center">
                                                 
                                                 <a href="<?= base_url( 'admin/edit_realisasi/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-warning">Update</i></a>
-                                                <a href="<?= base_url( 'admin/realisasi/delete/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                                <a href="<?= base_url( 'admin/realisasi/delete/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-danger"><i class="fa fa-print"></i></a>
+                                                <!-- <a href="<?= base_url( 'admin/laporan/?id='.$row->id_realisasi ) ?>"></a> -->
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>

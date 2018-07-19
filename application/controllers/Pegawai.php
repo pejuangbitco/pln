@@ -27,6 +27,7 @@ class Pegawai extends MY_Controller
             redirect('login');
             exit;
         }
+        $this->load->model('target_operasional_m');
     }
 
     public function index($value='')
@@ -119,7 +120,7 @@ class Pegawai extends MY_Controller
                 'ganti_sim'       => $this->POST('ganti_sim'),
                 'ganti_pembatas'  => $this->POST('ganti_pembatas'),
                 'ganti_ct'        => $this->POST('ganti_ct'),
-                'id_pelanggan'    => $this->POST('id_pelanggan')
+                'id_pelanggan'    => $this->POST('idpel')
             ];
             $this->realisasi_m->insert($this->data['realisasi']);
             $this->flashmsg('Sukses Input Data.');
@@ -139,14 +140,16 @@ class Pegawai extends MY_Controller
         $this->load->model('Data_pelanggan_m');
 
         if ($this->POST('simpan')) {
+            // echo json_encode($_FILES['foto']);exit;
             $this->geotag_m->insert([
                 'lon'   => $this->POST('longitude'),
                 'lat'   => $this->POST('latitude'),
                 'idpel' => $this->POST('idpel')
             ]);
-
-            if (!empty($_FILES['foto']['name']))
-                $this->upload($this->db->insert_id(),'geotag', 'foto');
+            $id = $this->db->insert_id();
+            if (!empty($_FILES['file']['name'])){
+                $this->upload($id,'img/geotag/', 'file');
+            }
 
             redirect('pegawai/geotag');
             exit;
@@ -168,7 +171,7 @@ class Pegawai extends MY_Controller
             ]);
             
             if (!empty($_FILES['foto']['name']))
-                $this->upload($this->POST('id'),'img/berita', 'foto');
+                $this->upload($this->POST('id'),'geotag', 'foto');
 
             redirect('pegawai/geotag');exit;
         }

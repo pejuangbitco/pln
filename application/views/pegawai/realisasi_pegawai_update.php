@@ -13,18 +13,18 @@
                         <?= form_open('pegawai/input_realisasi/'.$realisasi); ?>
                             <div class="form-group ">
                                 <label>ID Pelanggan </label>
-                                        <input type='text' pattern='[0-9]{12}' required name='idpel' id='idpel' maxlength="12" class="form-control">    
+                                        <input type='text' pattern='[0-9]{12}'  name='idpel' id='idpel' maxlength="12" class="form-control" value="<?= $this->target_operasional_m->get_row(['id_to' => $this->uri->segment(3)])->id_pelanggan ?>" readonly>    
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Tanggal</label>
-                                <input type="date" name="tanggal" required class="form-control">     
+                                <input type="date" name="tanggal"  class="form-control">     
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Ganti modem: </label>
-                                <input type="radio" value="0" name="ganti_modem" required>Tidak    
-                                <input type="radio" value="1" name="ganti_modem" required>Ya <br>
+                                <input type="radio" value="0" name="ganti_modem" >Tidak    
+                                <input type="radio" value="1" name="ganti_modem" >Ya <br>
                                 <label>IMEI Modem </label>
-                                        <input type='text' pattern='[0-9]' required name='imeimodem' id='imeimodem' maxlength="16" class="form-control"> 
+                                        <input type='text' pattern='[0-9]'  name='imeimodem' id='imeimodem' maxlength="16" class="form-control"> 
                                 <label>Merk Modem</label>
                                         
                                         <input type="text" name="merkmodem" class="form-control">
@@ -34,10 +34,10 @@
                             </div>    <hr>  
                             <div class="form-group ">
                                 <label class="control-label">Ganti meter: </label>
-                                <input type="radio" value="0" name="ganti_meter" required>Tidak    
-                                <input type="radio" value="1" name="ganti_meter" required>Ya <br>
+                                <input type="radio" value="0" name="ganti_meter" >Tidak    
+                                <input type="radio" value="1" name="ganti_meter" >Ya <br>
                                 <label>Nomor Meteran </label>
-                                        <input type='text' required name='idmeter' id='idmeter' maxlength="13" class="form-control">
+                                        <input type='text'  name='idmeter' id='idmeter' maxlength="13" class="form-control">
                                 <label>Merk Meteran</label>
                                         
                                         <input type="text" name="merkmeter" class="form-control">
@@ -47,7 +47,7 @@
                                 <label>Kelas Meteran</label>
                                 <input type="text" name="kelasmeter" class="form-control">
                                  <label>Tahun Pembuatan</label>
-                                <input type='text' pattern='[0-9]{4}' maxlength='4' required name='tahunbuat' id='tahunbuat' class="form-control">
+                                <input type='text' pattern='[0-9]{4}' maxlength='4'  name='tahunbuat' id='tahunbuat' class="form-control">
                                 <label>Arus</label>
                                 <label>Arus</label>
                                         
@@ -55,8 +55,8 @@
                             </div>  <hr>    
                             <div class="form-group ">
                                 <label class="control-label">Ganti pembatas: </label>
-                                <input type="radio" value="0" name="ganti_pembatas" required>Tidak    
-                                <input type="radio" value="1" name="ganti_pembatas" required>Ya <br>
+                                <input type="radio" value="0" name="ganti_pembatas" >Tidak    
+                                <input type="radio" value="1" name="ganti_pembatas" >Ya <br>
                                 <label>Merk Pembatas</label>                                
                                 <input type="text" name="merkpembatas" class="form-control">
                                 <label>Tipe Pembatas</label>                                
@@ -67,17 +67,17 @@
                             </div>   <hr>   
                             <div class="form-group ">
                                 <label class="control-label">Ganti sim: </label>
-                                <input type="radio" value="0" name="ganti_sim" required>Tidak    
-                                <input type="radio" value="1" name="ganti_sim" required>Ya <br>
+                                <input type="radio" value="0" name="ganti_sim" >Tidak    
+                                <input type="radio" value="1" name="ganti_sim" >Ya <br>
                                 <label>Nomor</label>
-                                <input type='text' pattern='[0-9]' required name='nomortlp' id='nomortlp' maxlength="13" class="form-control">
+                                <input type='text' pattern='[0-9]'  name='nomortlp' id='nomortlp' maxlength="13" class="form-control">
                                 <label>Provider</label>
                                 <input type="text" name="provider" class="form-control">  
                             </div>   <hr>   
                             <div class="form-group ">
                                 <label class="control-label">Ganti ct: </label>
-                                <input type="radio" value="0" name="ganti_ct" required>Tidak    
-                                <input type="radio" value="1" name="ganti_ct" required>Ya <br>
+                                <input type="radio" value="0" name="ganti_ct" >Tidak    
+                                <input type="radio" value="1" name="ganti_ct" >Ya <br>
                                 <label>Jenis ct</label>                                
                                 <input type="text" name="jenis_ct" class="form-control"> 
                             </div> <hr>

@@ -153,12 +153,7 @@ class Admin extends MY_Controller
                 'id_pelanggan'  => $this->POST('idpel')
             ];
             
-            if (!$this->data_pelanggan_m->insert($this->data['pelanggan'])) {
-                $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
-                $this->flashmsg('duplicate entry','warning');
-                redirect('admin/pelanggan','refresh');
-                exit();
-            }
+            $this->data_pelanggan_m->insert($this->data['pelanggan']);
             if (!$this->sim_card_m->insert($this->data['sim'])) {
                 $this->data_pelanggan_m->delete($this->data['pelanggan']['id_pelanggan']);
                 $this->flashmsg('duplicate entry','warning');
@@ -381,7 +376,7 @@ class Admin extends MY_Controller
 
     // update realiasi yg diinput oleh pegawai nantinya
     // print pdf realisasi per pelanggan
-    public function realisasi()
+    public function realisasi_pending()
     {
         $this->load->model('realisasi_m');
 
@@ -390,11 +385,30 @@ class Admin extends MY_Controller
             $id = $this->uri->segment(4);
             $this->realisasi_m->delete($id);
             $this->flashmsg('Sukses Delete Data.');
-            redirect('admin/realisasi','refresh');
+            redirect('admin/realisasi_pending','refresh');
             exit();
         }
 
         $this->data['realisasi']    = $this->realisasi_m->get([ 'status' => 0 ]);        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/realisasi';
+        $this->template($this->data);
+    }
+
+    public function realisasi_aktif()
+    {
+        $this->load->model('realisasi_m');
+
+        $action = $this->uri->segment(3);
+        if(isset($action) && $action=='delete') {
+            $id = $this->uri->segment(4);
+            $this->realisasi_m->delete($id);
+            $this->flashmsg('Sukses Delete Data.');
+            redirect('admin/realisasi+pending','refresh');
+            exit();
+        }
+
+        $this->data['realisasi']    = $this->realisasi_m->get([ 'status' => 1 ]);        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/realisasi';
         $this->template($this->data);
@@ -466,4 +480,17 @@ class Admin extends MY_Controller
         $this->template($this->data);
     }
 
+    public function laporan(){
+        @unlink(realpath(APPPATH . '../laporan.pdf'));
+        header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+        header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+        header("Content-disposition: attachment; filename=laporan.pdf");
+        header("Content-type: application/pdf");
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', -1);
+        $rand = mt_rand(1000, 2000);
+        $cmd = 'assets\phantomjs-2.1.1\bin\phantomjs.exe assets\phantomjs-2.1.1\generate_pdf.js ' . base_url('laporan/realisasi') . ' laporan.pdf ';
+        echo exec($cmd);
+        readfile(base_url('laporan.pdf'));
+    }
 }

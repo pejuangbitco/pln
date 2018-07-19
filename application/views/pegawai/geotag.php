@@ -13,7 +13,7 @@
                                 <?= form_open_multipart('pegawai/geotag'); ?>
                                 <div class="form-group">
                                   <label for="">Foto</label>
-                                  <input type="file" name="foto" class="form-control">
+                                  <input type="file" name="file" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Pelanggan</label>
