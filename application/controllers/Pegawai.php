@@ -52,7 +52,7 @@ class Pegawai extends MY_Controller
 
     public function input_realisasi($value='')
     {
-        $this->load->model([ 'realisasi_m','modem_m','pembatas_arus_m','ct_m','sim_card_m','meter_m' ]);        
+        $this->load->model([ 'realisasi_m','modem_m','pembatas_arus_m','ct_m','sim_card_m','meter_m','target_operasional_m' ]);        
 
         $id_to = $this->uri->segment(3);
         if(!isset($id_to)) {
@@ -128,7 +128,7 @@ class Pegawai extends MY_Controller
             exit();
         }
 
-        $this->data['realisasi']    = $id_to;               
+        $this->data['realisasi']    = $this->target_operasional_m->get_row([ 'id_to' => $id_to ]);
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'pegawai/realisasi_pegawai_update';
         $this->template($this->data);
