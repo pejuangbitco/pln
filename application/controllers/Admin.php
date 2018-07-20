@@ -417,7 +417,7 @@ class Admin extends MY_Controller
         $this->template($this->data);
     }
 
-    public function edit_realisasi()
+    public function detail_realisasi()
     {
         $this->load->model([ 'realisasi_m','target_operasional_m' ]);
 

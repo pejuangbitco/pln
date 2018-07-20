@@ -17,7 +17,7 @@
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Tanggal</label>
-                                <input type="date" name="tanggal"  class="form-control">     
+                                <input type="date" name="tanggal"  class="form-control" required>     
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Ganti modem: </label>                                

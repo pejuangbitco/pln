@@ -44,6 +44,7 @@ class Pegawai extends MY_Controller
     public function realisasi($value='')
     {
         $this->load->model('target_operasional_m');
+        $this->load->model('realisasi_m');
         $this->data['realisasi']    = $this->target_operasional_m->get([ 'pegawai' => $this->data['username'] ]);        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'pegawai/realisasi_pegawai';
@@ -120,7 +121,8 @@ class Pegawai extends MY_Controller
                 'ganti_sim'       => $this->POST('ganti_sim'),
                 'ganti_pembatas'  => $this->POST('ganti_pembatas'),
                 'ganti_ct'        => $this->POST('ganti_ct'),
-                'id_pelanggan'    => $this->POST('idpel')
+                'id_pelanggan'    => $this->POST('idpel'),
+                'status'          => 0
             ];
             $this->realisasi_m->insert($this->data['realisasi']);
             $this->flashmsg('Sukses Input Data.');
