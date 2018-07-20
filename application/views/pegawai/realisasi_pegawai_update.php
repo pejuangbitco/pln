@@ -17,7 +17,7 @@
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Tanggal</label>
-                                <input type="date" name="tanggal"  class="form-control">     
+                                <input type="date" name="tanggal"  class="form-control" required>     
                             </div> <hr>
                             <div class="form-group ">
                                 <label class="control-label">Ganti modem: </label>                                
@@ -120,7 +120,10 @@
                                 <label class="control-label">Stand Total</label>
                                 <input type="text" name="stand_total">     
                             </div>
-                                            
+                            <div class="form-group">
+                                <label for="">Rincian</label>
+                                <textarea name="rincian" class="form-control"></textarea>
+                            </div>
                             <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                         <?= form_close(); ?>    
                         </div>

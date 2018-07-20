@@ -7,12 +7,8 @@ class Pegawai extends MY_Controller
 	public function __construct()
     {
         parent::__construct();
-        $array = array(
-            'username' => 'syad',
-            'role'  => 2
-        );
-        
-        $this->session->set_userdata( $array );
+        // 
+
         $this->data['username']   = $this->session->userdata('username');
         $this->data['role']       = $this->session->userdata('role');
         if (!isset($this->data['username'], $this->data['role']))
@@ -44,6 +40,7 @@ class Pegawai extends MY_Controller
     public function realisasi($value='')
     {
         $this->load->model('target_operasional_m');
+        $this->load->model('realisasi_m');
         $this->data['realisasi']    = $this->target_operasional_m->get([ 'pegawai' => $this->data['username'] ]);        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'pegawai/realisasi_pegawai';
@@ -67,7 +64,15 @@ class Pegawai extends MY_Controller
                 'tipe'          => $this->POST('tipemodem'),
                 'id_pelanggan'  => $this->POST('idpel')
             ];  
+            if (empty($this->modem_m->get_row(['imei' => $this->POST('imeimodem')]))) {
                 $this->modem_m->insert($this->data['modem']);
+            }
+            else{
+                $this->flashmsg('Mohon Masukan Data Imei Yang lain' , 'warning');
+                redirect('pegawai/realisasi','refresh');
+                exit();
+            }
+                
             }            
             if($this->POST('ganti_meter') == 1) {
                 $this->data['meter'] = [
@@ -79,7 +84,16 @@ class Pegawai extends MY_Controller
                 'arus'  => $this->POST('arusmeter'),
                 'idpel' => $this->POST('idpel')             
             ];
+            if (empty($this->meter_m->get_row(['id_meter'=> $this->POST('idmeter')]))) {
+                
                 $this->meter_m->insert($this->data['meter']);
+            } else {
+                # code...
+                $this->flashmsg('Mohon Masukan Data Meteran Yang lain' , 'warning');
+                redirect('pegawai/realisasi','refresh');
+                exit();
+            }
+            
             }
             if($this->POST('ganti_pembatas') == 1) {
                 $this->data['pembatas'] = [
@@ -96,13 +110,22 @@ class Pegawai extends MY_Controller
                 'provider'    => $this->POST('provider'),
                 'id_pelanggan'=> $this->POST('idpel')                
             ];
+            if (empty($this->sim_card_m->get_row(['nomor' => $this->POST('nomortlp')]))) {
                 $this->sim_card_m->insert($this->data['sim']);
+            } else {
+                # code...
+                $this->flashmsg('Mohon Masukan Data SIM CARD Yang lain' , 'warning');
+                redirect('pegawai/realisasi','refresh');
+                exit();
+            }
+                
             }
             if($this->POST('ganti_ct') == 1) {
                 $this->data['ct'] = [
                 'jenis'       => $this->POST('jenis_ct'),
                 'id_pelanggan'  => $this->POST('idpel')
             ];
+            
                 $this->ct_m->insert($this->data['ct']);
             }
             $this->data['realisasi'] = [
@@ -120,7 +143,9 @@ class Pegawai extends MY_Controller
                 'ganti_sim'       => $this->POST('ganti_sim'),
                 'ganti_pembatas'  => $this->POST('ganti_pembatas'),
                 'ganti_ct'        => $this->POST('ganti_ct'),
-                'id_pelanggan'    => $this->POST('idpel')
+                'id_pelanggan'    => $this->POST('idpel'),
+                'status'          => 0,
+                'rincian'       => $this->POST('rincian')
             ];
             $this->realisasi_m->insert($this->data['realisasi']);
             $this->flashmsg('Sukses Input Data.');

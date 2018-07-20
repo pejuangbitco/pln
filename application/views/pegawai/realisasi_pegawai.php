@@ -21,7 +21,7 @@
                                                 <th>No</th>
                                                 <th>ID TO</th>
                                                 <th>Tanggal</th>
-                                                                                                                            
+                                                <th>Status</th>                                                                            
                                                 <th>Aksi</th>
                                                 <!-- <th></th> -->
                                             </tr>
@@ -32,10 +32,19 @@
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
                                                 <td><?= $row->id_to ?></td>                                                
                                                 <td><?= $row->date ?></td>
-                                                                                                
-                                                <td align="center">
+                                                <td>
+                                                    <?php  
+                                                        $cek = $this->realisasi_m->get_row([ 'id_to' => $row->id_to ]);
+                                                        if(isset($cek)) {
+                                                            echo "<b style='color: green;'>Sudah Input</b>";
+                                                        } else {
+                                                            echo "<b style='color: red;'>Pending</b>";
+                                                        }
+                                                    ?>
+                                                </td>                                                
+                                                <td>
                                                 
-                                                <a href="<?= base_url( 'pegawai/input_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary">Input</i></a>                                                
+                                                <a href="<?= base_url( 'pegawai/input_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary" <?php if(isset($cek)) {echo "disabled";} ?> >Input</i></a>                                                
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>
