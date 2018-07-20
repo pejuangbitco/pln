@@ -50,7 +50,8 @@
                                                 <!-- <a href="<?= base_url( 'admin/edit_realisasi/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-warning">Update</i></a> -->
                                                 <a href="<?= base_url( 'admin/realisasi/delete/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
                                                 <?php if ($row->status == 1): ?>
-                                                   <a href="<?= base_url( 'admin/laporan/'.$row->id_realisasi ) ?>" class="btn btn-primary btn-xs"><i class="fa fa-print"></i></a> 
+                                                   <!-- <a href="<?= base_url( 'admin/laporan/'.$row->id_realisasi ) ?>" class="btn btn-primary btn-xs"><i class="fa fa-print"></i></a> -->
+                                                   <a href="<?= base_url( 'laporan/realisasi/'.$row->id_realisasi ) ?>" class="btn btn-primary btn-xs"><i class="fa fa-print"></i></a> 
                                                 <?php endif ?>
                                                 
                                                 </td>
@@ -78,7 +79,11 @@
                     $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
                     
                     $('#dataTables-example').DataTable({
-                        responsive: true
+                        responsive: true,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
                     });
                 });
                 function konfirm(id) {
