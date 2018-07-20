@@ -21,6 +21,8 @@ class Laporan extends MY_Controller
     	$id = $this->uri->segment(3);
     	if ($id) {
     		$this->load->model('realisasi_m');
+    		$this->load->model('target_operasional_m');
+    		$this->load->model('pegawai_m');
     		$this->data['realisasi'] = $this->realisasi_m->get_row(['id_realisasi' => $id]);
     		if ($this->data['realisasi']->status == 1) {
     			$this->load->model([

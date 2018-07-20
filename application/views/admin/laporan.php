@@ -89,22 +89,34 @@
 					<tr>
 						<td>Nomor Meter</td>
 						<td><?= $this->meter_m->get_row(['idpel' => $data->idpel])->id_meter ?></td>
-						<td></td>
+						<td>
+							<?php if ($realisasi->ganti_meter == 1): ?>
+								<?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->id_meter ?>	
+							<?php endif ?>
+						</td>
 					</tr>
 					<tr>
 						<td>Merk / Type Meter</td>
 						<td><?= $this->meter_m->get_row(['idpel' => $data->idpel])->merk ?> / <?= $this->meter_m->get_row(['idpel' => $data->idpel])->tipe ?> </td>
-						<td></td>
+						<td>
+							<?php if ($realisasi->ganti_meter == 1): ?>
+								<?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->merk ?> / <?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->tipe ?>	
+							<?php endif ?>	
+						</td>
 					</tr>
 					<tr>
 						<td>Tahun Pembuatan</td>
 						<td><?= $this->meter_m->get_row(['idpel' => $data->idpel])->tahun_buat ?> </td>
-						<td>data</td>
+						<td><?php if ($realisasi->ganti_meter == 1): ?>
+								<?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->tahun_buat ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>Kelas</td>
 						<td><?= $this->meter_m->get_row(['idpel' => $data->idpel])->kelas ?> </td>
-						<td>data</td>
+						<td><?php if ($realisasi->ganti_meter == 1): ?>
+								<?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->kelas ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>Stand H(LWBP)</td>
@@ -118,23 +130,31 @@
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td><?= $realisasi->total ?></td>
+						<td><?= $realisasi->stand_total ?></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Type Pembatas Arus</td>
 						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->tipe?></td>
-						<td></td>
+						<td>
+							<?php if ($realisasi->ganti_pembatas == 1): ?>
+								<?= $this->pembatas_arus_m->get_last_row(['id_pelanggan' => $data->idpel])->tipe ?>	
+							<?php endif ?>
+						</td>
 					</tr>
 					<tr>
 						<td>Merk Pembatas Arus</td>
 						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->merk ?> </td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_pembatas == 1): ?>
+								<?= $this->pembatas_arus_m->get_last_row(['id_pelanggan' => $data->idpel])->merk ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>Arus</td>
 						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->arus ?></td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_pembatas == 1): ?>
+								<?= $this->pembatas_arus_m->get_last_row(['id_pelanggan' => $data->idpel])->arus ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>Trafo Arus (CT)</td>
@@ -144,7 +164,9 @@
 					<tr>
 						<td>Trafo Tegangan (PT)</td>
 						<td><?= $this->ct_m->get_row(['id_pelanggan' => $data->idpel])->jenis ?></td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_ct == 1): ?>
+								<?= $this->ct_m->get_last_row(['id_pelanggan' => $data->idpel])->jenis ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>Faktor Kali</td>
@@ -171,17 +193,23 @@
 					<tr>
 						<td>Merk / Type Modem</td>
 						<td><?= $this->modem_m->get_row(['id_pelanggan' => $data->idpel])->merk ?></td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_modem == 1): ?>
+								<?= $this->modem_m->get_last_row(['id_pelanggan' => $data->idpel])->merk ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>No IMEI Modem</td>
 						<td><?= $this->modem_m->get_row(['id_pelanggan' => $data->idpel])->imei ?></td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_modem == 1): ?>
+								<?= $this->modem_m->get_last_row(['id_pelanggan' => $data->idpel])->imei ?>	
+							<?php endif ?></td>
 					</tr>
 					<tr>
 						<td>No Sim Card / Provider</td>
 						<td><?= $this->sim_card_m->get_row(['id_pelanggan' => $data->idpel])->nomor ?></td>
-						<td></td>
+						<td><?php if ($realisasi->ganti_modem == 1): ?>
+								<?= $this->modem_m->get_last_row(['id_pelanggan' => $data->idpel])->nomor ?>	
+							<?php endif ?></td>
 					</tr>
 				</tbody>
 			</table><br><br>
@@ -256,19 +284,20 @@
 						<td> Disaksikan</td>
 					</tr>
 					<tr>
-						<td>1. </td>
-						<td>4. </td>
+						<td><?php $id = $this->target_operasional_m->get_row(['id_to' => $realisasi->id_to])->pegawai;
+							echo $this->pegawai_m->get_row(['username' => $id])->nama; ?></td>
+						<td>&nbsp;</td>
 						<td>1. </td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td>2. </td>
-						<td>5. </td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td>3. </td>
+						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>..................</td>
