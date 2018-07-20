@@ -21,16 +21,16 @@
 
 <body>
 <div id="wrapper">
-	<!-- <div class="row"> -->
-		<!-- <div class="col-sm-1" style="align-items: left;"> -->
+	<div class="row">
+		<div class="col-sm-1" style="align-items: left;">
 			<p>
-			<img src="<?= base_url('assets/img/logo.jpg') ?>" class="img img-thumbnail" width="50px" style="align-self: left;">
-		<!-- </div>
-		<div class="col-sm-10"> -->
-			<h6>PT. PLN (PERSERO)</h6>
-			<h6>AREA PALEMBANG</h6></p>
-		<!-- </div> -->
-	<!-- </div> -->
+			<img src="<?= base_url('assets/img/logo1.jpg') ?>" class="img img-thumbnail" width="80px" style="align-self: left;">
+		</div>
+		<div class="col-sm-10">
+			<h4>PT. PLN (PERSERO)</h4>
+			<h4>AREA PALEMBANG</h4></p>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-12" align="center">
 			<b><h3>BERITA ACARA PELAKSANAAN VERIFIKASI FISIK <br>
@@ -108,53 +108,53 @@
 					</tr>
 					<tr>
 						<td>Stand H(LWBP)</td>
-						<td>data</td>
-						<td>data</td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;L (WBP)</td>
-						<td>data</td>
-						<td>data</td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td>data</td>
-						<td>data</td>
+						<td><?= $realisasi->total ?></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>Type Pembatas Arus</td>
-						<td>$this->pembatas_arus_m->get_row(['idpel' => $data->idpel])->tipe</td>
+						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->tipe?></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Merk Pembatas Arus</td>
-						<td><?= $this->pembatas_arus_m->get_row(['idpel' => $data->idpel])->merk ?> </td>
+						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->merk ?> </td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Arus</td>
-						<td><?= $this->pembatas_arus_m->get_row(['idpel' => $data->idpel])->arus ?></td>
+						<td><?= $this->pembatas_arus_m->get_row(['id_pelanggan' => $data->idpel])->arus ?></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Trafo Arus (CT)</td>
-						<td>data</td>
+						<td></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Trafo Tegangan (PT)</td>
-						<td><?= $this->ct_m->get_row(['idpel' => $data->idpel])->jenis ?></td>
-						<td>data</td>
+						<td><?= $this->ct_m->get_row(['id_pelanggan' => $data->idpel])->jenis ?></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>Faktor Kali</td>
-						<td>data</td>
-						<td>data</td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>Boc APP</td>
-						<td>data</td>
-						<td>data</td>
+						<td></td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>
@@ -170,18 +170,18 @@
 				<tbody>
 					<tr>
 						<td>Merk / Type Modem</td>
-						<td><?= $this->modem_m->get_row(['idpel' => $data->idpel])->merk ?></td>
-						<td>data</td>
+						<td><?= $this->modem_m->get_row(['id_pelanggan' => $data->idpel])->merk ?></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>No IMEI Modem</td>
-						<td><?= $this->modem_m->get_row(['idpel' => $data->idpel])->imei ?></td>
-						<td>data</td>
+						<td><?= $this->modem_m->get_row(['id_pelanggan' => $data->idpel])->imei ?></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>No Sim Card / Provider</td>
-						<td><?= $this->sim_card->get_row(['idpel' => $data->idpel])->nomor ?></td>
-						<td>data</td>
+						<td><?= $this->sim_card_m->get_row(['id_pelanggan' => $data->idpel])->nomor ?></td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table><br><br>
@@ -196,22 +196,17 @@
 				<tbody>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IR = AMP</td>
+						<td>IR = <?= $realisasi->arus_r ?> AMP</td>
 						<td>R - N = VOLT</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IR = AMP</td>
-						<td>R - N = VOLT</td>
-					</tr>
-					<tr>
-						<td> &nbsp; </td>
-						<td>IS = AMP</td>
+						<td>IS = <?= $realisasi->arus_s ?> AMP</td>
 						<td>S - N = VOLT</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IT = AMP</td>
+						<td>IT = <?= $realisasi->arus_t ?> AMP</td>
 						<td>T - N = VOLT</td>
 					</tr>
 
@@ -222,17 +217,17 @@
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IR = AMP</td>
+						<td>IR = <?= $realisasi->tegangan_t ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IS = AMP</td>
+						<td>IS = <?= $realisasi->tegangan_t ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IT = AMP</td>
+						<td>IT = <?= $realisasi->tegangan_t ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 				</tbody>
@@ -246,7 +241,9 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style="text-align: left !important;">data</td>
+						<td style="text-align: left !important;"><p>
+							<?= $realisasi->kesimpulan ?>
+						</p></td>
 					</tr>
 				</tbody>
 			</table>

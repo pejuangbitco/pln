@@ -7,12 +7,12 @@ class Admin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $array = array(
-            'username' => 'adminn',
-            'role' => 1
-        );
+        // $array = array(
+        //     'username' => 'adminn',
+        //     'role' => 1
+        // );
         
-        $this->session->set_userdata( $array );
+        // $this->session->set_userdata( $array );
         $this->data['username']      = $this->session->userdata('username');
         $this->data['role']  = $this->session->userdata('role');
         if (!isset($this->data['username'], $this->data['role']))
@@ -27,7 +27,7 @@ class Admin extends MY_Controller
             redirect('login');
             exit;
         }
-
+        $this->load->model('data_pelanggan_m');
     }
     
     /*
@@ -379,7 +379,10 @@ class Admin extends MY_Controller
     public function realisasi_pending()
     {
         $this->load->model('realisasi_m');
-
+        if ($this->POST('konfirm')) {
+            $this->realisasi_m->update($this->POST('id') , ['status' => 1]);
+            exit;
+        }
         $action = $this->uri->segment(3);
         if(isset($action) && $action=='delete') {
             $id = $this->uri->segment(4);
@@ -481,6 +484,7 @@ class Admin extends MY_Controller
     }
 
     public function laporan(){
+        $id = $this->uri->segment(3);
         @unlink(realpath(APPPATH . '../laporan.pdf'));
         header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
         header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
@@ -489,7 +493,7 @@ class Admin extends MY_Controller
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', -1);
         $rand = mt_rand(1000, 2000);
-        $cmd = 'assets\phantomjs-2.1.1\bin\phantomjs.exe assets\phantomjs-2.1.1\generate_pdf.js ' . base_url('laporan/realisasi') . ' laporan.pdf ';
+        $cmd = 'assets\phantomjs-2.1.1\bin\phantomjs.exe assets\phantomjs-2.1.1\generate_pdf.js ' . base_url('laporan/realisasi/' .$id) . ' laporan.pdf ';
         echo exec($cmd);
         readfile(base_url('laporan.pdf'));
     }

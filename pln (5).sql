@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 19 Jul 2018 pada 05.24
--- Versi Server: 10.1.16-MariaDB
--- PHP Version: 7.0.9
+-- Waktu pembuatan: 20 Jul 2018 pada 04.09
+-- Versi server: 10.1.33-MariaDB
+-- Versi PHP: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -37,7 +39,8 @@ CREATE TABLE `ct` (
 --
 
 INSERT INTO `ct` (`id_ct`, `id_pelanggan`, `jenis`) VALUES
-(1, '987221212121', 'asa');
+(1, '987221212121', 'asa'),
+(2, '141202760602', 'NONE');
 
 -- --------------------------------------------------------
 
@@ -46,15 +49,15 @@ INSERT INTO `ct` (`id_ct`, `id_pelanggan`, `jenis`) VALUES
 --
 
 CREATE TABLE `data_pelanggan` (
-  `unitap` int(11) NOT NULL,
-  `unitup` int(11) NOT NULL,
+  `unitap` varchar(100) NOT NULL,
+  `unitup` varchar(100) NOT NULL,
   `idpel` varchar(100) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
-  `tarif` int(11) NOT NULL,
-  `daya` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `unitupi` int(11) NOT NULL
+  `tarif` varchar(100) NOT NULL,
+  `daya` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `unitupi` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -62,9 +65,10 @@ CREATE TABLE `data_pelanggan` (
 --
 
 INSERT INTO `data_pelanggan` (`unitap`, `unitup`, `idpel`, `nama`, `alamat`, `tarif`, `daya`, `status`, `unitupi`) VALUES
-(1, 1, '111111111111', '1', '1', 1, 1, 1, 1),
-(2, 2, '982716251515', 'KKKK', 'asasa', 88, 88, 1, 2),
-(1, 1, '987221212121', 'Rezi Apriliansyaha', 'asa', 900, 900, 1, 1);
+('1', '1', '111111111111', '1', '1', '1', '1', '1', '1'),
+('PALEMBANG', 'SUKARAME', '141202760602', 'PT VASTLAND A', 'JL TANJUNG SIAPI-API', 'B2', '41.5', 'AKTIV', 'S2JB'),
+('2', '2', '982716251515', 'KKKK', 'asasa', '88', '88', '1', '2'),
+('1', '1', '987221212121', 'Rezi Apriliansyaha', 'asa', '900', '900', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -84,7 +88,12 @@ CREATE TABLE `geotag` (
 --
 
 INSERT INTO `geotag` (`id`, `lon`, `lat`, `idpel`) VALUES
-(3, '', '', '987221212121');
+(8, '104.893372', '-5.1893031', '982716251515'),
+(9, '105.370620', '-5.3726595', '111111111111'),
+(10, '105.057510', '-5.4273474', '987221212121'),
+(11, '105.469497', '-5.2523291', '982716251515'),
+(12, '105.469497', '-5.2523291', '982716251515'),
+(13, '106.172622', '-6.2961851', '982716251515');
 
 -- --------------------------------------------------------
 
@@ -107,7 +116,8 @@ CREATE TABLE `meter` (
 --
 
 INSERT INTO `meter` (`id_meter`, `merk`, `tipe`, `kelas`, `tahun_buat`, `arus`, `idpel`) VALUES
-('1212', 'a', 'as', '12', 2013, '90', '987221212121');
+('1212', 'a', 'as', '12', 2013, '90', '987221212121'),
+('215276462', 'EDMI', 'MK10', '1', 2015, '5(20)', '141202760602');
 
 -- --------------------------------------------------------
 
@@ -127,6 +137,7 @@ CREATE TABLE `modem` (
 --
 
 INSERT INTO `modem` (`imei`, `merk`, `tipe`, `id_pelanggan`) VALUES
+('355784011755832', 'WASION', 'NONE', '141202760602'),
 ('9797012916261826', 'amam', '0', '987221212121');
 
 -- --------------------------------------------------------
@@ -167,7 +178,8 @@ CREATE TABLE `pembatas_arus` (
 --
 
 INSERT INTO `pembatas_arus` (`id_pembatas`, `id_pelanggan`, `merk`, `tipe`, `arus`) VALUES
-(1, '987221212121', 'asa', 'asas', 'asas');
+(1, '987221212121', 'asa', 'asas', 'asas'),
+(2, '141202760602', 'NONE', 'MCB', '63');
 
 -- --------------------------------------------------------
 
@@ -196,6 +208,13 @@ CREATE TABLE `realisasi` (
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `realisasi`
+--
+
+INSERT INTO `realisasi` (`id_realisasi`, `id_pelanggan`, `id_to`, `ganti_meter`, `ganti_modem`, `ganti_sim`, `ganti_pembatas`, `ganti_ct`, `kesimpulan`, `tanggal`, `arus_r`, `arus_s`, `arus_t`, `tegangan_r`, `tegangan_s`, `tegangan_t`, `stand_total`, `status`) VALUES
+(2, '141202760602', 5, 0, 0, 0, 0, 0, NULL, '2018-07-06', '1', '1', '1', '1', '1', '1', '6', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -213,6 +232,7 @@ CREATE TABLE `sim_card` (
 --
 
 INSERT INTO `sim_card` (`nomor`, `provider`, `id_pelanggan`) VALUES
+('08117102279', 'Telkomsel', '141202760602'),
 ('08981073502', 'tsel', '987221212121'),
 ('1', '1', '111111111111');
 
@@ -237,7 +257,9 @@ CREATE TABLE `target_operasional` (
 
 INSERT INTO `target_operasional` (`id_to`, `id_pelanggan`, `alasan`, `keterangan`, `date`, `pegawai`) VALUES
 (2, '111111111111', 'q', 'q', '2018-07-19', 'syad'),
-(3, '987221212121', 'q', 'q', '2018-07-19', 'syad');
+(3, '987221212121', 'q', 'q', '2018-07-19', 'syad'),
+(4, '141202760602', 'Menunggak`', 'bisa', '2018-07-19', 'syad'),
+(5, '141202760602', 'gangguan', 'asas', '2018-07-20', 'syad');
 
 -- --------------------------------------------------------
 
@@ -264,33 +286,33 @@ INSERT INTO `user` (`username`, `password`, `role`) VALUES
 --
 
 --
--- Indexes for table `ct`
+-- Indeks untuk tabel `ct`
 --
 ALTER TABLE `ct`
   ADD PRIMARY KEY (`id_ct`);
 
 --
--- Indexes for table `data_pelanggan`
+-- Indeks untuk tabel `data_pelanggan`
 --
 ALTER TABLE `data_pelanggan`
   ADD PRIMARY KEY (`idpel`),
   ADD KEY `idpel` (`idpel`);
 
 --
--- Indexes for table `geotag`
+-- Indeks untuk tabel `geotag`
 --
 ALTER TABLE `geotag`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `meter`
+-- Indeks untuk tabel `meter`
 --
 ALTER TABLE `meter`
   ADD PRIMARY KEY (`id_meter`),
   ADD KEY `idpel` (`idpel`);
 
 --
--- Indexes for table `modem`
+-- Indeks untuk tabel `modem`
 --
 ALTER TABLE `modem`
   ADD PRIMARY KEY (`imei`),
@@ -298,20 +320,20 @@ ALTER TABLE `modem`
   ADD KEY `id_pelanggan_2` (`id_pelanggan`);
 
 --
--- Indexes for table `pegawai`
+-- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `pembatas_arus`
+-- Indeks untuk tabel `pembatas_arus`
 --
 ALTER TABLE `pembatas_arus`
   ADD PRIMARY KEY (`id_pembatas`),
   ADD KEY `id_pelanggan` (`id_pelanggan`);
 
 --
--- Indexes for table `realisasi`
+-- Indeks untuk tabel `realisasi`
 --
 ALTER TABLE `realisasi`
   ADD PRIMARY KEY (`id_realisasi`),
@@ -319,7 +341,7 @@ ALTER TABLE `realisasi`
   ADD KEY `id_to` (`id_to`);
 
 --
--- Indexes for table `sim_card`
+-- Indeks untuk tabel `sim_card`
 --
 ALTER TABLE `sim_card`
   ADD PRIMARY KEY (`nomor`),
@@ -327,7 +349,7 @@ ALTER TABLE `sim_card`
   ADD KEY `id_pelanggan_2` (`id_pelanggan`);
 
 --
--- Indexes for table `target_operasional`
+-- Indeks untuk tabel `target_operasional`
 --
 ALTER TABLE `target_operasional`
   ADD PRIMARY KEY (`id_to`),
@@ -335,40 +357,45 @@ ALTER TABLE `target_operasional`
   ADD KEY `pegawai` (`pegawai`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `ct`
+-- AUTO_INCREMENT untuk tabel `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `geotag`
+-- AUTO_INCREMENT untuk tabel `geotag`
 --
 ALTER TABLE `geotag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
--- AUTO_INCREMENT for table `pembatas_arus`
+-- AUTO_INCREMENT untuk tabel `pembatas_arus`
 --
 ALTER TABLE `pembatas_arus`
-  MODIFY `id_pembatas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pembatas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `realisasi`
+-- AUTO_INCREMENT untuk tabel `realisasi`
 --
 ALTER TABLE `realisasi`
-  MODIFY `id_realisasi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_realisasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `target_operasional`
+-- AUTO_INCREMENT untuk tabel `target_operasional`
 --
 ALTER TABLE `target_operasional`
-  MODIFY `id_to` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_to` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
@@ -408,6 +435,7 @@ ALTER TABLE `sim_card`
 --
 ALTER TABLE `target_operasional`
   ADD CONSTRAINT `target_operasional_ibfk_1` FOREIGN KEY (`pegawai`) REFERENCES `pegawai` (`username`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
