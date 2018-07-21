@@ -6,7 +6,7 @@ class Sim_card_m extends MY_Model
 	{
 		parent::__construct();
 		$this->data['table_name']  = 'sim_card';
-		$this->data['primary_key'] = 'nomor';
+		$this->data['primary_key'] = 'urut';
 	}
 }
 

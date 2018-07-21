@@ -50,7 +50,7 @@ class Admin extends MY_Controller
 
     public function data_pelanggan()
     {
-        $this->load->model('data_pelanggan_m');
+        $this->load->model(['data_pelanggan_m','modem_m','ct_m','meter_m','pembatas_arus_m','sim_card_m']);
         
         $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['title']        = 'Dashboard Admin';
@@ -73,7 +73,7 @@ class Admin extends MY_Controller
             exit();
         }
 
-        if($this->POST('edit')) {
+        if($this->POST('edit')) {            
             $this->data['pelanggan'] = [
                 'unitupi'   => $this->POST('unitupi'),
                 'unitap'    => $this->POST('unitap'),
@@ -89,13 +89,72 @@ class Admin extends MY_Controller
             redirect('admin/edit_pelanggan/'.$idpel,'refresh');
             exit();
         }
+        if($this->POST('modem')) {
+            $this->data['modem'] = [
+                'imei'          => $this->POST('imeimodem'),
+                'merk'          => $this->POST('merkmodem'),
+                'tipe'          => $this->POST('tipemodem'),                
+            ];   
+            $this->modem_m->update($this->POST('urut'),$this->data['modem']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
+        if($this->POST('meter')) {
+            $this->data['meter'] = [
+                'id_meter' => $this->POST('idmeter'),
+                'merk'  => $this->POST('merkmeter'),
+                'tipe'  => $this->POST('tipemeter'),
+                'kelas' => $this->POST('kelasmeter'),
+                'tahun_buat' => $this->POST('tahunbuat'),
+                'arus'  => $this->POST('arusmeter'),
+                        
+            ]; 
+            $this->meter_m->update($this->POST('urut'),$this->data['meter']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
+        if($this->POST('sim')) {
+            $this->data['sim'] = [
+                'nomor'       => $this->POST('nomortlp'),
+                'provider'    => $this->POST('provider'),
+                            
+            ];  
+            $this->sim_card_m->update($this->POST('urut'),$this->data['sim']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
+        if($this->POST('pembatas')) {
+           $this->data['pembatas'] = [
+                'merk'  => $this->POST('merkpembatas'),
+                'tipe'  => $this->POST('tipepembatas'),
+                'arus'  => $this->POST('aruspembatas'),
+                
+            ]; 
+            $this->pembatas_arus_m->update($this->POST('urut'),$this->data['pembatas']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
+        if($this->POST('ct')) {
+           $this->data['ct'] = [
+                'jenis'       => $this->POST('jenis_ct'),
+                
+            ];
+            $this->ct_m->update($this->POST('urut'),$this->data['ct']);
+            $this->flashmsg('Sukses Edit Data.');
+            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
+            exit();
+        }
 
         $this->data['pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $idpel ]);
-        $this->data['sim_card']     = $this->sim_card_m->get([ 'id_pelanggan' => $idpel ]);
-        $this->data['modem']        = $this->modem_m->get([ 'id_pelanggan' => $idpel ]);
-        $this->data['meter']        = $this->meter_m->get([ 'idpel' => $idpel ]);
-        $this->data['pembatas']     = $this->pembatas_arus_m->get([ 'id_pelanggan' => $idpel ]);
-        $this->data['ct']           = $this->ct_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['sim_card']     = $this->sim_card_m->get_last_row([ 'id_pelanggan' => $idpel ]);
+        $this->data['modem']        = $this->modem_m->get_last_row([ 'id_pelanggan' => $idpel ]);
+        $this->data['meter']        = $this->meter_m->get_last_row([ 'idpel' => $idpel ]);
+        $this->data['pembatas']     = $this->pembatas_arus_m->get_last_row([ 'id_pelanggan' => $idpel ]);
+        $this->data['ct']           = $this->ct_m->get_last_row([ 'id_pelanggan' => $idpel ]);        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/edit_pelanggan';
         $this->template($this->data);

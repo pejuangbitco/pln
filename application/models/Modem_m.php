@@ -6,7 +6,7 @@ class Modem_m extends MY_Model
 	{
 		parent::__construct();
 		$this->data['table_name']  = 'modem';
-		$this->data['primary_key'] = 'imei';
+		$this->data['primary_key'] = 'urut';
 	}
 }
 
