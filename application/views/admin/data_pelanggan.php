@@ -10,9 +10,13 @@
                                     <?= $title ?>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <div class="panel-body">
+                                <div class="panel-body" style="overflow-x: scroll !important; ">
                                     <style type="text/css">
+                                    table {
+                                        overflow-x: scroll !important;
+                                    }
                                         tr th, tr td {text-align: center; padding: 1%;}
+                                    }
                                     </style>
                                     <?= $this->session->flashdata('msg') ?>
                                     

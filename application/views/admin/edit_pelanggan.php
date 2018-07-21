@@ -78,140 +78,124 @@
                                     </div>
 
                                     <div class="form-group">                                                      
-                                        <input type="submit" value="Simpan Profil" name="edit" class="form-control btn btn-primary">
+                                        <input type="submit" value="Simpan" name="edit" class="form-control btn btn-primary">
                                     </div>
                                     <hr>
                                     
                                     
                                     <?= form_close() ?>
-                                    <?= form_open('admin/edit_pelanggan/'. $pelanggan->idpel, ['id' => 'data-meter-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                        
-                                        <h4>Data Meteran</h4>
-                                        <input type="hidden" name="urut" value="<?= $meter->urut ?>">
-                                        <hr>
+                                    <?= form_open('#', ['id' => 'data-meter-form', 'style' => 'display: none;', 'role' => 'form']) ?>
+                                        <?php $i=1; foreach ($meter as $row) { ?>
+                                        <h4>Data Meteran <?= $i++; ?></h4>
                                         <div class="form-group">
                                             <label>Nomor Meteran </label>
-                                            <input type='text' value="<?= $meter->id_meter ?>" required name='idmeter' id='idmeter' maxlength="13" class="form-control">
+                                            <input type='text' value="<?= $row->id_meter ?>" required name='idmeter' id='idmeter' maxlength="13" class="form-control">
                                         </div>                          
                                         <div class="form-group">
                                             <label>Merk Meteran</label>
                                             
-                                            <input type="text" value="<?= $meter->merk ?>" name="merkmeter" class="form-control">
+                                            <input type="text" value="<?= $row->merk ?>" name="merkmeter" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Tipe Meteran</label>
                                             
-                                            <input type="text" value="<?= $meter->tipe ?>" name="tipemeter" class="form-control">
+                                            <input type="text" value="<?= $row->tipe ?>" name="tipemeter" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Kelas Meteran</label>
                                             
-                                            <input type="text" value="<?= $meter->kelas ?>" name="kelasmeter" class="form-control">
+                                            <input type="text" value="<?= $row->kelas ?>" name="kelasmeter" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Tahun Pembuatan</label>
-                                            <input type='text' value="<?= $meter->tahun_buat ?>" pattern='[0-9]{4}' maxlength='4' required name='tahunbuat' id='tahunbuat' class="form-control">
+                                            <input type='text' value="<?= $row->tahun_buat ?>" pattern='[0-9]{4}' maxlength='4' required name='tahunbuat' id='tahunbuat' class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Arus</label>
                                             
-                                            <input type="text" value="<?= $meter->arus ?>" name="arusmeter" class="form-control">
-                                        </div>
-                                        <div class="form-group">                                                      
-                                            <input type="submit" value="Simpan Meter" name="meter" class="form-control btn btn-primary">
+                                            <input type="text" value="<?= $row->arus ?>" name="arusmeter" class="form-control">
                                         </div>
                                         <hr>
-                                        
+                                        <?php } ?>
                                     
 
                                     <?= form_close() ?>
-                                    <?= form_open('admin/edit_pelanggan/'. $pelanggan->idpel, ['id' => 'data-modem-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                    
-                                        
-                                        <h4>Data Modem</h4>
-                                        <input type="hidden" name="urut" value="<?= $modem->urut ?>">
-                                        <hr>
+                                    <?= form_open('#', ['id' => 'data-modem-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                    
+                                        <?php $i=1; foreach ($modem as $row) { ?>                                        
+                                        <h4>Data Modem <?= $i++; ?></h4>
                                         <div class="form-group">
                                             <label>IMEI Modem </label>
-                                            <input value="<?= $modem->imei ?>" type='text' required name='imeimodem' id='imeimodem' maxlength="16" class="form-control">
+                                            <input value="<?= $row->imei ?>" type='text' pattern='[0-9]' required name='imeimodem' id='imeimodem' maxlength="16" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Merk Modem</label>
                                             
-                                            <input value="<?= $modem->merk ?>" type="text" name="merkmodem" class="form-control">
+                                            <input value="<?= $row->merk ?>" type="text" name="merkmodem" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Tipe Modem</label>
                                             
-                                            <input value="<?= $modem->tipe ?>" type="text" name="tipemodem" class="form-control">
-                                        </div>
-                                        <div class="form-group">                                                      
-                                            <input type="submit" value="Simpan Modem" name="modem" class="form-control btn btn-primary">
+                                            <input value="<?= $row->tipe ?>" type="text" name="tipemodem" class="form-control">
                                         </div>
                                         <hr>
-                                        
+                                        <?php } ?>
                                     
 
                                     <?= form_close() ?>
-                                    <?= form_open('admin/edit_pelanggan/'. $pelanggan->idpel, ['id' => 'data-sim-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                 
-                                                                                                                    
-                                        <h4>Data Sim Card</h4>
-                                        <input type="hidden" name="urut" value="<?= $sim_card->urut ?>">
+                                    <?= form_open('#', ['id' => 'data-sim-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                 
+                                        <?php $i=1; foreach ($sim_card as $row) { ?>                                        
+                                        
+                                        <h4>Data Sim Card <?= $i++; ?></h4>
                                         <hr>
                                         <div class="form-group">
                                             <label>Nomor</label>
-                                            <input value="<?= $sim_card->nomor ?>" type='text' required name='nomortlp' id='nomortlp' maxlength="13" class="form-control">
+                                            <input value="<?= $row->nomor ?>" type='text' pattern='[0-9]' required name='nomortlp' id='nomortlp' maxlength="13" class="form-control">
                                         </div>                          
                                         <div class="form-group">
                                             <label>Provider</label>
-                                            <input value="<?= $sim_card->provider ?>" type="text" name="provider" class="form-control">
-                                        </div>
-                                        <div class="form-group">                                                      
-                                            <input type="submit" value="Simpan SIM" name="sim" class="form-control btn btn-primary">
+                                            <input value="<?= $row->provider ?>" type="text" name="provider" class="form-control">
                                         </div>
                                         <hr>
-                                        
+                                        <?php } ?>
                                     <?= form_close() ?>
 
-                                    <?= form_open('admin/edit_pelanggan/'. $pelanggan->idpel, ['id' => 'data-pembatas-form', 'style' => 'display: none;', 'role' => 'form']) ?>
+                                    <?= form_open('#', ['id' => 'data-pembatas-form', 'style' => 'display: none;', 'role' => 'form']) ?>
 
-                                                                                                                                                  
-                                        <h4>Data Pembatas</h4>
-                                        <input type="hidden" name="urut" value="<?= $pembatas->id_pembatas ?>">
+                                                                      
+                                        <?php $i=1; foreach ($pembatas as $row) { ?>                                        
+
+                                        <h4>Data Pembatas <?= $i++; ?></h4>
                                         <hr>
                                         <div class="form-group">
                                             <label>Merk Pembatas</label>             
-                                            <input value="<?= $pembatas->merk ?>" type="text" name="merkpembatas" class="form-control"> 
+                                            <input value="<?= $row->merk ?>" type="text" name="merkpembatas" class="form-control"> 
                                         </div>
                                         <div class="form-group">
                                             <label>Tipe Pembatas</label>                                
                                             
-                                            <input value="<?= $pembatas->tipe ?>" type="text" name="tipepembatas" class="form-control">
+                                            <input value="<?= $row->tipe ?>" type="text" name="tipepembatas" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>Arus Pembatas</label>                                
                                             
-                                            <input value="<?= $pembatas->arus ?>" type="text" name="aruspembatas" class="form-control">
+                                            <input value="<?= $row->arus ?>" type="text" name="aruspembatas" class="form-control">
                                         </div>
-                                        <div class="form-group">                                                      
-                                            <input type="submit" value="Simpan Pembatas" name="pembatas" class="form-control btn btn-primary">
-                                        </div>
-                                        <hr>                                        
+                                        <hr>
+                                        <?php } ?>
                                     
 
                                     <?= form_close() ?>
-                                    <?= form_open('admin/edit_pelanggan/'. $pelanggan->idpel, ['id' => 'data-ct-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                                                                                                 
-                                        <h4>Data CT</h4>
-                                        <input type="hidden" name="urut" value="<?= $ct->id_ct ?>">
-                                        <hr>
+                                    <?= form_open('#', ['id' => 'data-ct-form', 'style' => 'display: none;', 'role' => 'form']) ?>                                      
+                                        <?php $i=1; foreach ($ct as $row) { ?>                                        
+
+                                        <h4>Data CT <?= $i++; ?></h4>
                                         <div class="form-group">
                                             <label>Jenis ct</label>                                
                                             
-                                            <input value="<?= $ct->jenis ?>" type="text" name="jenis_ct" class="form-control">
-                                        </div>
-                                        <div class="form-group">                                                      
-                                            <input type="submit" value="Simpan CT" name="ct" class="form-control btn btn-primary">
+                                            <input value="<?= $row->jenis ?>" type="text" name="jenis_ct" class="form-control">
                                         </div>
                                         <hr>
-                                        
+                                        <?php } ?>
                                     <?= form_close() ?>
 
                                     

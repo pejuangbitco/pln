@@ -15,13 +15,20 @@
                                         tr th, tr td {text-align: center; padding: 1%;}
                                     </style>
                                     <?= $this->session->flashdata('msg') ?>                                    
-                                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>ID Pelanggan</th>
                                                 <th>Tanggal</th>
-                                                <th>Status</th>                                                                           
+                                                <th>Rincian</th>
+                                                <?php if ($this->uri->segment(2) == 'realisasi_pending'): ?>
+                                                    
+                                                <th>Status</th>
+
+                                                <?php endif ?>
+                                                <th>Pegawai</th>                                                                 
                                                 <th>Aksi</th>
                                                 <!-- <th></th> -->
                                             </tr>
@@ -32,22 +39,22 @@
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
                                                 <td><?= $row->id_pelanggan .' - '. $this->data_pelanggan_m->get_row(['idpel' => $row->id_pelanggan])->nama ?></td>                                                
                                                 <td><?= $row->tanggal ?></td>
+                                                <td><?= $row->rincian ?></td>
+                                                    <?php 
+                                                        if ($row->status == 0) : ?>
+                                                        <td><button class="btn btn-xs btn-success" onclick="konfirm('.$row->id_realisasi.')">Konfirmasi</button></td>
+                                                    <?php endif
+                                                    ?>      
                                                 <td>
                                                     <?php 
-                                                        switch ($row->status) {
-                                                            case 0:
-                                                                echo '<button class="btn btn-xs btn-success" onclick="konfirm('.$row->id_realisasi.')">Konfirmasi</button>';
-                                                                break;
-                                                            case 1:
-                                                                echo '<button class="btn btn-xs btn-success" disabled>Telah Dikonfirmasi</button>';
-                                                                break;
-                                                            
-                                                        }
+                                                        $id = $this->target_operasional_m->get_row(['id_to' => $row->id_to])->pegawai;
+                                                        echo $this->pegawai_m->get_row(['username' => $id])->nama;
                                                     ?>
-                                                </td>                                               
+                                                </td>                                     
                                                 <td align="center">
                                                 
                                                 <!-- <a href="<?= base_url( 'admin/edit_realisasi/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-warning">Update</i></a> -->
+                                                <a href="<?= base_url('admin/map-geotag/' . $row->id_pelanggan) ?>" class="btn btn-xs btn-info" <?php if(empty($this->geotag_m->get_row(['idpel' => $row->id_pelanggan]))) {echo "disabled";} ?>><i class="fa fa-map"></i></a> 
                                                 <a href="<?= base_url( 'admin/detail_realisasi/'.$row->id_realisasi ) ?>" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a> 
                                                 <a href="<?= base_url( 'admin/realisasi/delete/'.$row->id_realisasi ) ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 
@@ -62,6 +69,7 @@
                                             <?php $i++; endforeach; ?>
                                         </tbody>
                                     </table>
+                                    </div>
                                     <!-- /.table-responsive -->
                                     
                                 </div>
@@ -81,6 +89,14 @@
                 $(document).ready(function() {
                     $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
                     
+                    //Exportable table
+                    // $('.js-exportable').DataTable({
+                    //     dom: 'Bfrtip',
+                    //     responsive: true,
+                    //     buttons: [
+                    //         'copy', 'csv', 'excel', 'pdf', 'print'
+                    //     ]
+                    // });sponsi
                     $('#dataTables-example').DataTable({
                         responsive: true,
                         dom: 'Bfrtip',

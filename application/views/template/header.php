@@ -22,16 +22,30 @@
     <link rel="icon" type="image/png" sizes="96x96" href="<?= base_url('') ?>assets/img/favicon.png">
     
     <!-- DataTables CSS -->
-    <link href="<?= base_url('') ?>assets/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- <link href="<?= base_url('') ?>assets/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet"> -->
 
     <!-- DataTables Responsive CSS -->
     <link href="<?= base_url('') ?>assets/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Jquery DataTable Plugin Js -->
+    <link href="<?= base_url('assets/vendor/') ?>/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- <script src="<?= base_url('') ?>assets/vendor/jquery/jquery.min.js"></script> -->
+    <script src="<?= base_url('') ?>assets/scripts/jquery.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
     <!-- Bootstrap Datepicker CSS -->
     <link href="<?= base_url('assets/datepicker') ?>/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 
     
-    <script src="<?= base_url('') ?>assets/vendor/jquery/jquery.min.js"></script>
     
     <!-- TinyMCE -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC24ZZQszcxML_aax1ZiMFty9gDeo58Lg0"></script>
