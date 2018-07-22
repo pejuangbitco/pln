@@ -63,8 +63,8 @@
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
                                                 <td align="center">
                                                 
-                                                <a href="<?= base_url( 'admin/edit_pelanggan/'.$row->idpel ) ?>" class="btn btn-xs btn-warning">Edit</a>
-                                                
+                                                <a href="<?= base_url( 'admin/edit_pelanggan/'.$row->idpel ) ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <a href="<?= base_url( 'admin/data_pelanggan/delete/'.$row->idpel ) ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
                                                 </td>
                                                 <td><?= $row->idpel ?></td>
                                                 <td class="col-md-4"><?= $row->nama ?></td>

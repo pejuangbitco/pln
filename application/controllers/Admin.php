@@ -52,6 +52,15 @@ class Admin extends MY_Controller
     {
         $this->load->model(['data_pelanggan_m','modem_m','ct_m','meter_m','pembatas_arus_m','sim_card_m']);
         
+        $action = $this->uri->segment(3);
+        if(isset($action) && $action=='delete') {
+            $id = $this->uri->segment(4);
+            $this->data_pelanggan_m->delete($id);            
+            $this->flashmsg('Sukses Delete Data.');
+            redirect('admin/data_pelanggan','refresh');
+            exit();
+        }
+
         $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/data_pelanggan';

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 21 Jul 2018 pada 20.00
+-- Generation Time: 22 Jul 2018 pada 02.57
 -- Versi Server: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -38,7 +38,7 @@ CREATE TABLE `ct` (
 
 INSERT INTO `ct` (`id_ct`, `id_pelanggan`, `jenis`) VALUES
 (3, '141202760602', '11'),
-(4, '222222222222', '2');
+(5, '222222222222', '2');
 
 -- --------------------------------------------------------
 
@@ -63,8 +63,7 @@ CREATE TABLE `data_pelanggan` (
 --
 
 INSERT INTO `data_pelanggan` (`unitap`, `unitup`, `idpel`, `nama`, `alamat`, `tarif`, `daya`, `status`, `unitupi`) VALUES
-('PALEMBANG', 'SUKARAME', '141202760602', 'PT VASTLAND A', 'JL TANJUNG SIAPI-API', 'B2', '41.5', 'AKTIF', 'S2JB'),
-('2', '2', '222222222222', 'aa', '2', '2', '2', 'AKTIF', '2');
+('PALEMBANG', 'SUKARAME', '141202760602', 'PT VASTLAND A', 'JL TANJUNG SIAPI-API', 'B2', '41.5', 'AKTIF', 'S2JB');
 
 -- --------------------------------------------------------
 
@@ -113,8 +112,7 @@ CREATE TABLE `meter` (
 --
 
 INSERT INTO `meter` (`urut`, `id_meter`, `merk`, `tipe`, `kelas`, `tahun_buat`, `arus`, `idpel`) VALUES
-(1, '11', '1', '1', '1', 1997, '1', '141202760602'),
-(2, '2', '2', '2', '2', 2010, '2', '222222222222');
+(1, '11', '1', '1', '1', 1997, '1', '141202760602');
 
 -- --------------------------------------------------------
 
@@ -135,8 +133,7 @@ CREATE TABLE `modem` (
 --
 
 INSERT INTO `modem` (`urut`, `imei`, `merk`, `tipe`, `id_pelanggan`) VALUES
-(1, '11', '1', '1', '141202760602'),
-(2, '2', '2', '2', '222222222222');
+(1, '11', '1', '1', '141202760602');
 
 -- --------------------------------------------------------
 
@@ -179,7 +176,7 @@ INSERT INTO `pembatas_arus` (`id_pembatas`, `id_pelanggan`, `merk`, `tipe`, `aru
 (1, '987221212121', 'asa', 'asas', 'asas'),
 (2, '141202760602', 'NONE', 'MCB', '63'),
 (3, '141202760602', '11', '1', '1'),
-(4, '222222222222', '2', '2', '2');
+(5, '222222222222', '2', '2', '2');
 
 -- --------------------------------------------------------
 
@@ -233,8 +230,7 @@ CREATE TABLE `sim_card` (
 --
 
 INSERT INTO `sim_card` (`urut`, `nomor`, `provider`, `id_pelanggan`) VALUES
-(3, '11', '1', '141202760602'),
-(4, '2', '2', '222222222222');
+(3, '11', '1', '141202760602');
 
 -- --------------------------------------------------------
 
@@ -373,7 +369,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `geotag`
 --
@@ -383,17 +379,17 @@ ALTER TABLE `geotag`
 -- AUTO_INCREMENT for table `meter`
 --
 ALTER TABLE `meter`
-  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `modem`
 --
 ALTER TABLE `modem`
-  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pembatas_arus`
 --
 ALTER TABLE `pembatas_arus`
-  MODIFY `id_pembatas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pembatas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `realisasi`
 --
@@ -403,7 +399,7 @@ ALTER TABLE `realisasi`
 -- AUTO_INCREMENT for table `sim_card`
 --
 ALTER TABLE `sim_card`
-  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `urut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `target_operasional`
 --
@@ -417,13 +413,13 @@ ALTER TABLE `target_operasional`
 -- Ketidakleluasaan untuk tabel `meter`
 --
 ALTER TABLE `meter`
-  ADD CONSTRAINT `meter_ibfk_1` FOREIGN KEY (`idpel`) REFERENCES `data_pelanggan` (`idpel`);
+  ADD CONSTRAINT `meter_ibfk_1` FOREIGN KEY (`idpel`) REFERENCES `data_pelanggan` (`idpel`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `modem`
 --
 ALTER TABLE `modem`
-  ADD CONSTRAINT `modem_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`idpel`);
+  ADD CONSTRAINT `modem_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`idpel`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pegawai`
@@ -441,7 +437,7 @@ ALTER TABLE `realisasi`
 -- Ketidakleluasaan untuk tabel `sim_card`
 --
 ALTER TABLE `sim_card`
-  ADD CONSTRAINT `sim_card_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`idpel`);
+  ADD CONSTRAINT `sim_card_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`idpel`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `target_operasional`
