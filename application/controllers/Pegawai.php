@@ -24,13 +24,38 @@ class Pegawai extends MY_Controller
             exit;
         }
         $this->load->model('target_operasional_m');
+        $this->load->model('data_pelanggan_m');
     }
 
     public function index($value='')
     {
+        $this->load->model('realisasi_m');
+        $this->data['realisasi']    = $this->realisasi_m->get(['status' => 1]);
+        $this->data['kesimpulan'] = [
+            'HAR'   => 0,
+            'INSPEKSI'  => 0,
+            'APP'   => 0,
+            'AMR'   => 0
+        ];
+        foreach ($this->data['realisasi'] as $key) {
+            switch ($key->kesimpulan) {
+                case 'HAR':
+                    $this->data['kesimpulan']['HAR']++;
+                    break;
+                case 'INSPEKSI':
+                    $this->data['kesimpulan']['INSPEKSI']++;
+                    break;
+                case 'APP':
+                    $this->data['kesimpulan']['APP']++;
+                    break;
+                case 'AMR':
+                    $this->data['kesimpulan']['AMR']++;
+                    break;
+            }
+        }
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/dashboard';
-        $this->template($this->data);
+        $this->template($this->data,$this->data);
     }
 
     /*
@@ -39,8 +64,8 @@ class Pegawai extends MY_Controller
     */
     public function realisasi($value='')
     {
-        $this->load->model('target_operasional_m');
         $this->load->model('realisasi_m');
+        $this->load->model('geotag_m');
         $this->data['realisasi']    = $this->target_operasional_m->get([ 'pegawai' => $this->data['username'] ]);        
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'pegawai/realisasi_pegawai';
@@ -145,6 +170,7 @@ class Pegawai extends MY_Controller
                 'ganti_ct'        => $this->POST('ganti_ct'),
                 'id_pelanggan'    => $this->POST('idpel'),
                 'status'          => 0,
+                'kesimpulan'       => $this->POST('kesimpulan'),
                 'rincian'       => $this->POST('rincian')
             ];
             $this->realisasi_m->insert($this->data['realisasi']);
@@ -166,15 +192,13 @@ class Pegawai extends MY_Controller
 
         if ($this->POST('simpan')) {
             // echo json_encode($_FILES['foto']);exit;
-            $this->geotag_m->insert([
+            $data = [
                 'lon'   => $this->POST('longitude'),
                 'lat'   => $this->POST('latitude'),
                 'idpel' => $this->POST('idpel')
-            ]);
-            $id = $this->db->insert_id();
-            if (!empty($_FILES['file']['name'])){
-                $this->upload($id,'img/geotag/', 'file');
-            }
+            ];
+            $this->geotag_m->insert($data);
+            $this->upload($this->db->insert_id(), '/img/geotag/', 'foto');
 
             redirect('pegawai/geotag');
             exit;
@@ -196,7 +220,7 @@ class Pegawai extends MY_Controller
             ]);
             
             if (!empty($_FILES['foto']['name']))
-                $this->upload($this->POST('id'),'geotag', 'foto');
+                $this->upload($this->POST('id'),'/img/geotag', 'foto');
 
             redirect('pegawai/geotag');exit;
         }
@@ -205,5 +229,37 @@ class Pegawai extends MY_Controller
         $this->data['content']      = 'pegawai/geotag';
         $this->template($this->data);
         
+    }
+
+    public function detail_geotag($value='')
+    {
+        $id = $this->uri->segment(3);
+        if (!isset($id)) {
+            redirect('pegawai/geotag','refresh');
+            exit;
+        }
+        $this->load->model('geotag_m');
+        $this->load->model('data_pelanggan_m');
+        $this->data['data']         = $this->geotag_m->get_row(['id' => $id]);        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'pegawai/map_geotag';
+        $this->template($this->data);
+        # code...
+    }
+
+    public function map_geotag($value='')
+    {
+        $id = $this->uri->segment(3);
+        if (!isset($id)) {
+            redirect('pegawai/geotag','refresh');
+            exit;
+        }
+        $this->load->model('geotag_m');
+        $this->load->model('data_pelanggan_m');
+        $this->data['data']         = $this->geotag_m->get_row(['idpel' => $id]);        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'pegawai/map_geotag';
+        $this->template($this->data);
+        # code...
     }
 }

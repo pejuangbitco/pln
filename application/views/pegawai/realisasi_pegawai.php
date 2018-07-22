@@ -19,7 +19,8 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>ID TO</th>
+                                                <th>Pelanggan</th>
+                                                <th>Alamat</th>
                                                 <th>Tanggal</th>
                                                 <th>Status</th>                                                                            
                                                 <th>Aksi</th>
@@ -28,13 +29,23 @@
                                         </thead>
                                         <tbody>
                                             <?php $i=1; foreach($realisasi as $row): ?>
+                                            <?php 
+                                                $cek = $this->realisasi_m->get_row([ 'id_to' => $row->id_to ]);
+                                                if (isset($cek)) {
+                                                    
+                                                    if ($cek->status != 0) 
+                                                    continue;
+                                                }
+                                                
+                                            ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td><?= $row->id_to ?></td>                                                
+                                                <td><?= $row->id_pelanggan . ' - ' .$this->data_pelanggan_m->get_row(['idpel' => $row->id_pelanggan])->nama ?></td> 
+                                                <td><?= $this->data_pelanggan_m->get_row(['idpel' => $row->id_pelanggan])->alamat ?></td>                                                         
                                                 <td><?= $row->date ?></td>
                                                 <td>
                                                     <?php  
-                                                        $cek = $this->realisasi_m->get_row([ 'id_to' => $row->id_to ]);
+                                                        
                                                         if(isset($cek)) {
                                                             echo "<b style='color: green;'>Sudah Input</b>";
                                                         } else {
@@ -44,7 +55,8 @@
                                                 </td>                                                
                                                 <td>
                                                 
-                                                <a href="<?= base_url( 'pegawai/input_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary" <?php if(isset($cek)) {echo "disabled";} ?> >Input</i></a>                                                
+                                                <a href="<?= base_url( 'pegawai/input_realisasi/'.$row->id_to ) ?>" class="btn btn-xs btn-primary" <?php if(isset($cek)) {echo "disabled";} ?> >Input</i></a>
+                                                <a href="<?= base_url('pegawai/map-geotag/' . $row->id_pelanggan) ?>" class="btn btn-xs btn-info" <?php if(empty($this->geotag_m->get_row(['idpel' => $row->id_pelanggan]))) {echo "disabled";} ?>>Lokasi</a>                                        
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>

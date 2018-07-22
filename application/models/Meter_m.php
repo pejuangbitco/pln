@@ -6,7 +6,7 @@ class Meter_m extends MY_Model
 	{
 		parent::__construct();
 		$this->data['table_name']  = 'meter';
-		$this->data['primary_key'] = 'urut';
+		$this->data['primary_key'] = 'id_meter';
 	}
 }
 

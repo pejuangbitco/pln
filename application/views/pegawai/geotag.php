@@ -10,10 +10,10 @@
                               <h4>Tambah Data Geotag</h4>
                             </div>
                               <div class="panel-body">
-                                <?= form_open_multipart('pegawai/geotag'); ?>
+                                <?= form_open_multipart('pegawai/geotag') ?>
                                 <div class="form-group">
                                   <label for="">Foto</label>
-                                  <input type="file" name="file" class="form-control">
+                                  <input type="file" name="foto" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Pelanggan</label>
@@ -54,7 +54,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th></th>
+                                                <!-- <th></th> -->
                                                 <th>Koordinat</th>
                                                 <th>Pelanggan</th>
                                                 <th>Alamat</th>                
@@ -66,15 +66,21 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td>
+                                               <!--  <td>
                                                   <img src="<?= base_url('assets/img/geotag/' . $row->id .'.jpg') ?>" class="img img-thumbnail" width="200px">
-                                                </td>
+                                                </td> -->
                                                 <td><?= $row->lon .' , '. $row->lat ?></td>                                                
-                                                <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->nama ?></td>
-                                                <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->alamat ?></td>                            
+                                                <?php if (!empty($this->Data_pelanggan_m->get_row(['idpel' => $row->idpel]))): ?>
+                                                    <td><?=  $row->idpel .' - ' .$this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->nama ?></td>
+                                                  <td><?= $this->Data_pelanggan_m->get_row(['idpel' => $row->idpel])->alamat ?></td>   
+                                                  <?php else : ?>
+                                                  <td>-</td>
+                                                  <td>-</td> 
+                                                  <?php endif ?>                         
                                                 <td align="center">
                                                     <button class="btn btn-primary" onclick="_edit(<?= $row->id ?>)" data-toggle="modal" data-target="#edit">Edit</button>
-                                                    <button class="btn btn-danger" onclick="_hapus(<?= $row->id ?>)">Hapus</button>                                               
+                                                    <button class="btn btn-danger" onclick="_hapus(<?= $row->id ?>)">Hapus</button>
+                                                    <a href="<?= base_url('pegawai/detail-geotag/' . $row->id ) ?>" class="btn btn-xs btn-info">Detail</a>             
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>
@@ -139,10 +145,21 @@
             <script>
                 $(document).ready(function() {
                     $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
+                    if ("geolocation" in navigator){ //check geolocation available 
+                        //try to get user current location using getCurrentPosition() method
+                        navigator.geolocation.getCurrentPosition(function(position){ 
+                          $('#map-add-hidden_latitude').val(position.coords.latitude);
+                          $('#map-add-hidden_longitude').val(position.coords.longitude);
+                          $('#map-add-latitude').text(position.coords.latitude);
+                          $('#map-add-longitude').text(position.coords.longitude);
+                          console.log("Found your location <br />Lat : "+position.coords.latitude+" </br>Lang :"+ position.coords.longitude);
+                        });
+                    }
                     initMap('map-add');
                     $('#dataTables-example').DataTable({
                         responsive: true
                     });
+
                 });
 
                 function _edit(id) {
@@ -188,8 +205,20 @@
                 function initMap(id) {
                   $('#' + id + '-latitude').text('');
                   $('#' + id + '-longitude').text('');
-                  $('#' + id + '-hidden_latitude').val(null);
-                  $('#' + id + '-hidden_longitude').val(null);
+
+                    if ("geolocation" in navigator){ //check geolocation available 
+                        //try to get user current location using getCurrentPosition() method
+                        navigator.geolocation.getCurrentPosition(function(position){ 
+                          $('#' + id + '-hidden_latitude').val(position.coords.latitude);
+                          $('#' + id + '-hidden_longitude').val(position.coords.longitude);
+                          console.log("Found your location <br />Lat : "+position.coords.latitude+" </br>Lang :"+ position.coords.longitude);
+                        });
+                    }else{
+                        $('#' + id + '-hidden_latitude').val(null);
+                        $('#' + id + '-hidden_longitude').val(null);
+                        console.log("Browser doesn't support geolocation!");
+                    }
+                  
                   var coordinate = {lat: -6.121435, lng: 106.774124};
                   var map = new google.maps.Map(document.getElementById(id), {
                     zoom: 8,

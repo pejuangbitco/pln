@@ -28,6 +28,9 @@ class Admin extends MY_Controller
             exit;
         }
         $this->load->model('data_pelanggan_m');
+        $this->load->model('geotag_m');
+        
+        $this->load->model(['target_operasional_m','pegawai_m']);
     }
     
     /*
@@ -36,9 +39,33 @@ class Admin extends MY_Controller
     */
     public function index()
     {
+        $this->load->model('realisasi_m');
+        $this->data['realisasi']    = $this->realisasi_m->get(['status' => 1]);
+        $this->data['kesimpulan'] = [
+            'HAR'   => 0,
+            'INSPEKSI'  => 0,
+            'APP'   => 0,
+            'AMR'   => 0
+        ];
+        foreach ($this->data['realisasi'] as $key) {
+            switch ($key->kesimpulan) {
+                case 'HAR':
+                    $this->data['kesimpulan']['HAR']++;
+                    break;
+                case 'INSPEKSI':
+                    $this->data['kesimpulan']['INSPEKSI']++;
+                    break;
+                case 'APP':
+                    $this->data['kesimpulan']['APP']++;
+                    break;
+                case 'AMR':
+                    $this->data['kesimpulan']['AMR']++;
+                    break;
+            }
+        }
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/dashboard';
-        $this->template($this->data);
+        $this->template($this->data,$this->data);
     }
 
     /*
@@ -82,7 +109,7 @@ class Admin extends MY_Controller
             exit();
         }
 
-        if($this->POST('edit')) {            
+        if($this->POST('edit')) {
             $this->data['pelanggan'] = [
                 'unitupi'   => $this->POST('unitupi'),
                 'unitap'    => $this->POST('unitap'),
@@ -98,72 +125,13 @@ class Admin extends MY_Controller
             redirect('admin/edit_pelanggan/'.$idpel,'refresh');
             exit();
         }
-        if($this->POST('modem')) {
-            $this->data['modem'] = [
-                'imei'          => $this->POST('imeimodem'),
-                'merk'          => $this->POST('merkmodem'),
-                'tipe'          => $this->POST('tipemodem'),                
-            ];   
-            $this->modem_m->update($this->POST('urut'),$this->data['modem']);
-            $this->flashmsg('Sukses Edit Data.');
-            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
-            exit();
-        }
-        if($this->POST('meter')) {
-            $this->data['meter'] = [
-                'id_meter' => $this->POST('idmeter'),
-                'merk'  => $this->POST('merkmeter'),
-                'tipe'  => $this->POST('tipemeter'),
-                'kelas' => $this->POST('kelasmeter'),
-                'tahun_buat' => $this->POST('tahunbuat'),
-                'arus'  => $this->POST('arusmeter'),
-                        
-            ]; 
-            $this->meter_m->update($this->POST('urut'),$this->data['meter']);
-            $this->flashmsg('Sukses Edit Data.');
-            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
-            exit();
-        }
-        if($this->POST('sim')) {
-            $this->data['sim'] = [
-                'nomor'       => $this->POST('nomortlp'),
-                'provider'    => $this->POST('provider'),
-                            
-            ];  
-            $this->sim_card_m->update($this->POST('urut'),$this->data['sim']);
-            $this->flashmsg('Sukses Edit Data.');
-            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
-            exit();
-        }
-        if($this->POST('pembatas')) {
-           $this->data['pembatas'] = [
-                'merk'  => $this->POST('merkpembatas'),
-                'tipe'  => $this->POST('tipepembatas'),
-                'arus'  => $this->POST('aruspembatas'),
-                
-            ]; 
-            $this->pembatas_arus_m->update($this->POST('urut'),$this->data['pembatas']);
-            $this->flashmsg('Sukses Edit Data.');
-            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
-            exit();
-        }
-        if($this->POST('ct')) {
-           $this->data['ct'] = [
-                'jenis'       => $this->POST('jenis_ct'),
-                
-            ];
-            $this->ct_m->update($this->POST('urut'),$this->data['ct']);
-            $this->flashmsg('Sukses Edit Data.');
-            redirect('admin/edit_pelanggan/'.$idpel,'refresh');
-            exit();
-        }
 
         $this->data['pelanggan']    = $this->data_pelanggan_m->get_row([ 'idpel' => $idpel ]);
-        $this->data['sim_card']     = $this->sim_card_m->get_last_row([ 'id_pelanggan' => $idpel ]);
-        $this->data['modem']        = $this->modem_m->get_last_row([ 'id_pelanggan' => $idpel ]);
-        $this->data['meter']        = $this->meter_m->get_last_row([ 'idpel' => $idpel ]);
-        $this->data['pembatas']     = $this->pembatas_arus_m->get_last_row([ 'id_pelanggan' => $idpel ]);
-        $this->data['ct']           = $this->ct_m->get_last_row([ 'id_pelanggan' => $idpel ]);        
+        $this->data['sim_card']     = $this->sim_card_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['modem']        = $this->modem_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['meter']        = $this->meter_m->get([ 'idpel' => $idpel ]);
+        $this->data['pembatas']     = $this->pembatas_arus_m->get([ 'id_pelanggan' => $idpel ]);
+        $this->data['ct']           = $this->ct_m->get([ 'id_pelanggan' => $idpel ]);
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/edit_pelanggan';
         $this->template($this->data);
@@ -469,7 +437,6 @@ class Admin extends MY_Controller
     public function realisasi_aktif()
     {
         $this->load->model('realisasi_m');
-
         $action = $this->uri->segment(3);
         if(isset($action) && $action=='delete') {
             $id = $this->uri->segment(4);
@@ -528,12 +495,31 @@ class Admin extends MY_Controller
         $this->template($this->data);
     }
 
-    public function geotag($value='')
+    public function geotag()
     {
         $this->load->model('geotag_m');
-        $this->load->model('data_pelanggan_m');
+        $this->load->model('Data_pelanggan_m');
+
+        if ($this->POST('simpan')) {
+            // echo json_encode($_FILES['foto']);exit;
+            $data = [
+                'lon'   => $this->POST('longitude'),
+                'lat'   => $this->POST('latitude'),
+                'idpel' => $this->POST('idpel')
+            ];
+            $this->geotag_m->insert($data);
+            $this->upload($this->db->insert_id(), '/img/geotag/', 'foto');
+
+            redirect('admin/geotag');
+            exit;
+        }
+
         if ($this->POST('get')) {
             echo json_encode($this->geotag_m->get_row(['id' => $this->POST('id')]));
+            exit;
+        }
+        if ($this->POST('hapus')) {
+            $this->geotag_m->delete($this->POST('id'));
             exit;
         }
         if ($this->POST('edit')) {
@@ -542,13 +528,49 @@ class Admin extends MY_Controller
                 'lat'   => $this->POST('latitude'),
                 // 'idpel' => $this->POST('idpel')
             ]);
+            
+            if (!empty($_FILES['foto']['name']))
+                $this->upload($this->POST('id'),'/img/geotag', 'foto');
 
             redirect('admin/geotag');exit;
         }
-        $this->data['geotag']               = $this->geotag_m->get();        
-        $this->data['title']                = 'Dashboard Admin';
-        $this->data['content']              = 'admin/geotag';
+        $this->data['data']    = $this->geotag_m->get();        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'admin/geotag';
         $this->template($this->data);
+        
+    }
+
+    public function detail_geotag($value='')
+    {
+        $id = $this->uri->segment(3);
+        if (!isset($id)) {
+            redirect('admin/geotag','refresh');
+            exit;
+        }
+        $this->load->model('geotag_m');
+        $this->load->model('data_pelanggan_m');
+        $this->data['data']         = $this->geotag_m->get_row(['id' => $id]);        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'pegawai/map_geotag';
+        $this->template($this->data);
+        # code...
+    }
+
+    public function map_geotag($value='')
+    {
+        $id = $this->uri->segment(3);
+        if (!isset($id)) {
+            redirect('admin/geotag','refresh');
+            exit;
+        }
+        $this->load->model('geotag_m');
+        $this->load->model('data_pelanggan_m');
+        $this->data['data']         = $this->geotag_m->get_row(['idpel' => $id]);        
+        $this->data['title']        = 'Dashboard Admin';
+        $this->data['content']      = 'pegawai/map_geotag';
+        $this->template($this->data);
+        # code...
     }
 
     public function laporan(){

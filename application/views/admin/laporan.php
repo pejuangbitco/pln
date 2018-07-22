@@ -219,7 +219,7 @@
 			<table class="table table-bordered" style="width: 90%; border: 1px solid black;border-collapse: collapse;" border="1">
 				<thead>
 					<tr>
-						<td rowspan="8" border="0"><b>C. PENGUKURAN DATA<b>s</td>
+						<td rowspan="8" border="0"><b>C. PENGUKURAN DATA<b></td>
 						<td>Pengukuran Arus Primer</td>
 						<td>Pengukuran Tegangan Rendah</td>
 					</tr>

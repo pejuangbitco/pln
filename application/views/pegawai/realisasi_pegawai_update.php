@@ -124,6 +124,16 @@
                                 <label for="">Rincian</label>
                                 <textarea name="rincian" class="form-control"></textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="">Kesimpulan</label>
+                                <select name="kesimpulan" class="form-control">
+                                    <option value="">==Pilih Kesimpulan==</option>
+                                    <option value="HAR">HAR</option>
+                                    <option value="INSPEKSI">INSPEKSI</option>
+                                    <option value="APP">APP</option>
+                                    <option value="AMR">AMR</option>
+                                </select>
+                            </div>
                             <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                         <?= form_close(); ?>    
                         </div>
