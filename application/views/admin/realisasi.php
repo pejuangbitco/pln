@@ -11,12 +11,12 @@
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
-                                    <style type="text/css">
+                                    <!-- <style type="text/css">
                                         tr th, tr td {text-align: center; padding: 1%;}
-                                    </style>
+                                    </style> -->
                                     <?= $this->session->flashdata('msg') ?>                                    
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-hover" id="dataTables-example">
+                                        <table class="table table-bordered table-striped table-hover export" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -38,11 +38,11 @@
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
                                                 <td><?= $row->id_pelanggan .' - '. $this->data_pelanggan_m->get_row(['idpel' => $row->id_pelanggan])->nama ?></td>                                                
-                                                <td><?= $row->tanggal ?></td>
+                                                <td><?= $this->tanggal->convert_date($row->tanggal) ?></td>
                                                 <td><?= $row->rincian ?></td>
                                                     <?php 
                                                         if ($row->status == 0) : ?>
-                                                        <td><button class="btn btn-xs btn-success" onclick="konfirm('.$row->id_realisasi.')">Konfirmasi</button></td>
+                                                        <td><button class="btn btn-xs btn-success" onclick="konfirm(<?= $row->id_realisasi ?>)">Konfirmasi</button></td>
                                                     <?php endif
                                                     ?>      
                                                 <td>
@@ -90,18 +90,33 @@
                     $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
                     
                     //Exportable table
-                    // $('.js-exportable').DataTable({
+                    // $('.export').DataTable({
                     //     dom: 'Bfrtip',
                     //     responsive: true,
                     //     buttons: [
-                    //         'copy', 'csv', 'excel', 'pdf', 'print'
+                    //         'copyHtml5',
+                    //         'excelHtml5',
+                    //         'csvHtml5',
+                    //         'pdfHtml5'
                     //     ]
-                    // });sponsi
+                    // });
                     $('#dataTables-example').DataTable({
                         responsive: true,
                         dom: 'Bfrtip',
-                        buttons: [
-                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        buttons: [ 
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                    columns: [ 0, 1, 2, 3 , 4 ]
+                                }
+                            },
+
+                            {
+                                extend: 'pdf',
+                                exportOptions: {
+                                    columns: [ 0, 1, 2, 3 , 4 ]
+                                }
+                            }
                         ]
                     });
                 });
@@ -113,7 +128,7 @@
                                 konfirm: true,
                                 id: id
                             },
-                            success: function() {
+                            success: function(data) {
                                 // alert(data);
                                 window.location = '<?= base_url('admin/realisasi_aktif/') ?>';
                             }

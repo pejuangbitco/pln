@@ -78,7 +78,6 @@ class Admin extends MY_Controller
     public function data_pelanggan()
     {
         $this->load->model(['data_pelanggan_m','modem_m','ct_m','meter_m','pembatas_arus_m','sim_card_m']);
-        
         $action = $this->uri->segment(3);
         if(isset($action) && $action=='delete') {
             $id = $this->uri->segment(4);
@@ -87,7 +86,6 @@ class Admin extends MY_Controller
             redirect('admin/data_pelanggan','refresh');
             exit();
         }
-
         $this->data['pelanggan']    = $this->data_pelanggan_m->get();
         $this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'admin/data_pelanggan';
@@ -417,7 +415,8 @@ class Admin extends MY_Controller
         $this->load->model('realisasi_m');
         if ($this->POST('konfirm')) {
             $this->realisasi_m->update($this->POST('id') , ['status' => 1]);
-            exit;
+            echo $this->POST('id');
+        exit;
         }
         $action = $this->uri->segment(3);
         if(isset($action) && $action=='delete') {

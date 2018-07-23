@@ -4,7 +4,8 @@
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?= $title ?>
+                    <!-- <?= $title ?> -->
+                    Input Realisasi
                     <!--<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>-->
                 </div>
                 <div class="panel-body">

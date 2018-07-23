@@ -44,7 +44,7 @@ input.invalid {
                                 <div class="col-md-8">
                                 <?= form_open('admin/pelanggan',[ 'id' => 'regForm' ]); ?>                                    
                                     <div class="tab">
-                                        <h4>Data Pribadi</h4><hr>
+                                        <h4>Data Pelanggan</h4><hr>
                                         <div class="form-group">
                                             <label>UNITUPI</label>
                                             

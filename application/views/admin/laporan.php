@@ -84,15 +84,15 @@
 			<table class="table table-bordered" style="width: 90%;border: 1px solid black;border-collapse: collapse;" border="1">
 				<thead>
 					<tr>
-						<th style="text-align: left;">A. PEMERIKSAAN APP</th>
-						<th style="text-align: left;">DATA ASET LAMA</th>
-						<th style="text-align: left;">DATA ASET BARU</th>
+						<th style="text-align: left; width: 30%;">A. PEMERIKSAAN APP</th>
+						<th style="text-align: left; width: 30%;">DATA ASET LAMA</th>
+						<th style="text-align: left; width: 30%;">DATA ASET BARU</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>Nomor Meter</td>
-						<td><?= $this->meter_m->get_row(['idpel' => $data->idpel])->id_meter ?></td>
+						<td><?= 1 ?></td>
 						<td>
 							<?php if ($realisasi->ganti_meter == 1): ?>
 								<?= $this->meter_m->get_last_row(['idpel' => $data->idpel])->id_meter ?>	
@@ -187,9 +187,9 @@
 			<table class="table table-bordered" style="width: 90%; border: 1px solid black;border-collapse: collapse;" border="1">
 				<thead>
 					<tr>
-						<th style="text-align: left;">B. PERALATAN AMR</th>
-						<th style="text-align: left;">DATA ASET LAMA</th>
-						<th style="text-align: left;">DATA ASET BARU</th>
+						<th style="text-align: left; width: 30%;">B. PERALATAN AMR</th>
+						<th style="text-align: left; width: 30%;">DATA ASET LAMA</th>
+						<th style="text-align: left; width: 30%;">DATA ASET BARU</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -219,26 +219,26 @@
 			<table class="table table-bordered" style="width: 90%; border: 1px solid black;border-collapse: collapse;" border="1">
 				<thead>
 					<tr>
-						<td rowspan="8" border="0"><b>C. PENGUKURAN DATA<b></td>
-						<td>Pengukuran Arus Primer</td>
-						<td>Pengukuran Tegangan Rendah</td>
+						<td rowspan="8" border="0" style="width: 30%;"><b>C. PENGUKURAN DATA<b></td>
+						<td  border="0" style="width: 30%;">Pengukuran Arus Primer</td>
+						<td  border="0" style="width: 30%;">Pengukuran Tegangan Rendah</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td> &nbsp; </td>
 						<td>IR =  AMP</td>
-						<td>R - N = <?= $realisasi->arus_r ?> VOLT</td>
+						<td>R - N = <?= $realisasi->tegangan_r ?> VOLT</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
 						<td>IS =  AMP</td>
-						<td>S - N = <?= $realisasi->arus_s ?> VOLT</td>
+						<td>S - N = <?= $realisasi->tegangan_s ?> VOLT</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
 						<td>IT =  AMP</td>
-						<td>T - N = <?= $realisasi->arus_t ?> VOLT</td>
+						<td>T - N = <?= $realisasi->tegangan_t ?> VOLT</td>
 					</tr>
 
 					<tr>
@@ -248,17 +248,17 @@
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IR = <?= $realisasi->tegangan_t ?> AMP</td>
+						<td>IR = <?= $realisasi->arus_r ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IS = <?= $realisasi->tegangan_t ?> AMP</td>
+						<td>IS = <?= $realisasi->arus_s ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td> &nbsp; </td>
-						<td>IT = <?= $realisasi->tegangan_t ?> AMP</td>
+						<td>IT = <?= $realisasi->arus_t ?> AMP</td>
 						<td>&nbsp;</td>
 					</tr>
 				</tbody>

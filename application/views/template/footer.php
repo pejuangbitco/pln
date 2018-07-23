@@ -16,9 +16,9 @@
     <script src="<?= base_url('') ?>assets/scripts/klorofil-common.js"></script>
 
     <!-- DataTables JavaScript -->
-    <script src="<?= base_url('') ?>assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="<?= base_url('') ?>assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="<?= base_url('') ?>assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="<?= base_url('') ?>assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="<?= base_url('') ?>assets/vendor/datatables-responsive/dataTables.responsive.js"></script> -->
 
     <!-- Bootstrap Datepicker JavaScript -->
     <script src="<?= base_url('assets/datepicker') ?>/js/bootstrap-datepicker.min.js"></script>

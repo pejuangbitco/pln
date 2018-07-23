@@ -29,7 +29,7 @@
 
     <!-- Jquery DataTable Plugin Js -->
     <link href="<?= base_url('assets/vendor/') ?>/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
     <!-- <script src="<?= base_url('') ?>assets/vendor/jquery/jquery.min.js"></script> -->
     <script src="<?= base_url('') ?>assets/scripts/jquery.min.js"></script>
     <script src="<?= base_url('assets/vendor/') ?>/jquery-datatable/jquery.dataTables.js"></script>

@@ -7,7 +7,8 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <?= $title ?>
+                                   <!--  <?= $title ?> -->
+                                   Data Realisasi
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
